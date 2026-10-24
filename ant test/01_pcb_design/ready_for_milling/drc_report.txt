@@ -1,0 +1,51 @@
+** Drc report for backscatter_tag_leggiero.kicad_pcb **
+** Created on 2026-10-21T12:16:06 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 7 DRC violations **
+[clearance]: Clearance violation (netclass 'Default' clearance 0,5000 mm; actual 0,0000 mm)
+    Rule: netclass 'Default'; error
+    @(27.4600 mm, 25.4125 mm): Track [/TERM_50R] on F.Cu, length 2.5875 mm
+    @(5.5000 mm, 5.5000 mm): Zone [GND] on F.Cu, priority 0
+[clearance]: Clearance violation (netclass 'Default' clearance 0,5000 mm; actual 0,0000 mm)
+    Rule: netclass 'Default'; error
+    @(27.4600 mm, 28.0000 mm): PTH pad 1 [/TERM_50R] of J1
+    @(5.5000 mm, 5.5000 mm): Zone [GND] on F.Cu, priority 0
+[clearance]: Clearance violation (netclass 'Default' clearance 0,5000 mm; actual 0,0000 mm)
+    Rule: netclass 'Default'; error
+    @(27.4600 mm, 25.4125 mm): Pad 2 [/TERM_50R] of R1 on F.Cu
+    @(5.5000 mm, 5.5000 mm): Zone [GND] on F.Cu, priority 0
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0,5000 mm; actual 0,0000 mm)
+    Rule: board setup constraints hole; error
+    @(27.4600 mm, 28.0000 mm): PTH pad 1 [/TERM_50R] of J1
+    @(5.5000 mm, 5.5000 mm): Zone [GND] on F.Cu, priority 0
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(27.4600 mm, 28.0000 mm): PTH pad 1 [/TERM_50R] of J1
+    @(5.5000 mm, 5.5000 mm): Zone [GND] on F.Cu, priority 0
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(27.4600 mm, 25.4125 mm): Pad 2 [/TERM_50R] of R1 on F.Cu
+    @(5.5000 mm, 5.5000 mm): Zone [GND] on F.Cu, priority 0
+[lib_footprint_issues]: Footprint 'Leggiero_Bowtie_2.4GHz' not found in library 'RF_Antenna'
+    Local override; warning
+    @(30.0000 mm, 16.0000 mm): Footprint AE1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Thermal relief connection to zone incomplete
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Silkscreen clearance
+    - Silkscreen clipped by solder mask
+    - PTH inside courtyard
+    - NPTH inside courtyard
+    - Footprint component type doesn't match footprint pads
+    - Footprint doesn't match copy in library
+
+** End of Report **

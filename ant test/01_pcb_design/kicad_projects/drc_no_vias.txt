@@ -1,0 +1,57 @@
+** Drc report for test_no_vias.kicad_pcb **
+** Created on 2026-10-21T11:40:34+0300 **
+
+** Found 13 DRC violations **
+[starved_thermal]: Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(31,5000 mm, 18,0000 mm): Zone [GND] on F.Cu, priority 0
+    @(32,5400 mm, 23,0000 mm): PTH pad 3 [GND] of J1
+[starved_thermal]: Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(10,5000 mm, 18,0000 mm): Zone [GND] on F.Cu, priority 0
+    @(27,9000 mm, 18,0000 mm): Pad 2 [GND] of AE1 on F.Cu
+[starved_thermal]: Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(31,5000 mm, 18,0000 mm): Zone [GND] on F.Cu, priority 0
+    @(32,8250 mm, 43,4000 mm): Pad 2 [GND] of J2 on F.Cu
+[starved_thermal]: Thermal relief connection to zone incomplete (layer B.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(10,5000 mm, 18,0000 mm): Zone [GND] on B.Cu, priority 0
+    @(32,5400 mm, 23,0000 mm): PTH pad 3 [GND] of J1
+[starved_thermal]: Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(10,5000 mm, 18,0000 mm): Zone [GND] on F.Cu, priority 0
+    @(27,1750 mm, 43,4000 mm): Pad 2 [GND] of J2 on F.Cu
+[starved_thermal]: Thermal relief connection to zone incomplete (layer B.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(10,5000 mm, 18,0000 mm): Zone [GND] on B.Cu, priority 0
+    @(27,1750 mm, 43,4000 mm): Pad 2 [GND] of J2 on B.Cu
+[starved_thermal]: Thermal relief connection to zone incomplete (layer B.Cu; zone min spoke count 2; actual 1)
+    Local override; error
+    @(10,5000 mm, 18,0000 mm): Zone [GND] on B.Cu, priority 0
+    @(32,8250 mm, 43,4000 mm): Pad 2 [GND] of J2 on B.Cu
+[lib_footprint_mismatch]: Footprint 'Texas_SWRA117D_2.4GHz_Right' does not match copy in library 'RF_Antenna'.
+    Local override; warning
+    @(30,0000 mm, 18,0000 mm): Footprint AE1
+[lib_footprint_mismatch]: Footprint 'R_0805_2012Metric' does not match copy in library 'Resistor_SMD'.
+    Local override; warning
+    @(27,4600 mm, 19,5000 mm): Footprint R1
+[lib_footprint_mismatch]: Footprint 'PinHeader_1x03_P2.54mm_Vertical' does not match copy in library 'Connector_PinHeader_2.54mm'.
+    Local override; warning
+    @(30,0000 mm, 23,0000 mm): Footprint J1
+[lib_footprint_mismatch]: Footprint 'R_0805_2012Metric' does not match copy in library 'Resistor_SMD'.
+    Local override; warning
+    @(30,0000 mm, 32,0000 mm): Footprint R2
+[lib_footprint_mismatch]: Footprint 'SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount' does not match copy in library 'Connector_Coaxial'.
+    Local override; warning
+    @(30,0000 mm, 43,4000 mm): Footprint J2
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(19,0000 mm, 19,0000 mm): PCB text 'DUAL TERMINATION:' on F.Silkscreen
+    @(24,9600 mm, 19,5000 mm): Reference field of R1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

@@ -1,0 +1,351 @@
+(kicad_pcb
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(general
+		(thickness 1.6)
+		(legacy_teardrops no)
+	)
+	(paper "A4")
+	(title_block
+		(title "2.4 GHz RF Backscatter Tag - M2")
+		(date "2026-10-20")
+		(rev "1.0")
+		(company "Backscattering SDR Research")
+		(comment 1 "TI SWRA117D 2.4 GHz IFA Layout on F.Cu")
+		(comment 2 "Dual Termination: 50R Resistor & 2-pin Jumper Header")
+		(comment 3 "Edge-Launch SMA Connector with Calibration Bridge")
+		(comment 4 "CNC PCB Isolation Milling Clearance >= 0.40 mm (0.50 mm configured)")
+	)
+	(layers
+		(0 "F.Cu" signal)
+		(2 "B.Cu" signal)
+		(1 "F.Mask" user)
+		(3 "B.Mask" user)
+		(5 "F.SilkS" user "F.Silkscreen")
+		(7 "B.SilkS" user "B.Silkscreen")
+		(25 "Edge.Cuts" user)
+		(31 "F.CrtYd" user "F.Courtyard")
+		(29 "B.CrtYd" user "B.Courtyard")
+		(35 "F.Fab" user)
+		(33 "B.Fab" user)
+	)
+	(setup
+		(stackup
+			(layer "F.SilkS" (type "Top Silk Screen"))
+			(layer "F.Mask" (type "Top Solder Mask") (thickness 0.01))
+			(layer "F.Cu" (type "copper") (thickness 0.035))
+			(layer "dielectric 1" (type "core") (thickness 1.51) (material "FR4") (epsilon_r 4.4) (loss_tangent 0.02))
+			(layer "B.Cu" (type "copper") (thickness 0.035))
+			(layer "B.Mask" (type "Bottom Solder Mask") (thickness 0.01))
+			(layer "B.SilkS" (type "Bottom Silk Screen"))
+			(copper_finish "None")
+			(dielectric_constraints yes)
+		)
+		(pad_to_mask_clearance 0)
+		(allow_soldermask_bridges_in_footprints yes)
+		(pcbplotparams
+			(layerselection 0x00000000_00000000_00000000_02000005)
+			(disableapertmacros no)
+			(usegerberextensions no)
+			(usegerberattributes yes)
+			(usegerberadvancedattributes yes)
+			(creategerberjobfile yes)
+			(mode 1)
+			(useauxorigin no)
+			(dxfpolygonmode yes)
+			(dxfimperialunits no)
+			(dxfusepcbnewfont yes)
+			(outputformat 1)
+			(outputdirectory "gerbers")
+		)
+	)
+
+	(net 0 "")
+	(net 1 "GND")
+	(net 2 "/FEED")
+	(net 3 "/SMA_FEED")
+	(net 4 "/TERM_50R")
+
+	(net_class "Default"
+		"Standard netclass with >= 0.40 mm CNC isolation clearance"
+		(clearance 0.50)
+		(trace_width 0.50)
+		(via_dia 0.90)
+		(via_drill 0.40)
+		(uvia_dia 0.50)
+		(uvia_drill 0.25)
+	)
+	(net_class "RF_50OHM"
+		"50 Ohm Grounded Coplanar Waveguide (CPWG) with W=1.85mm, G=0.50mm"
+		(clearance 0.50)
+		(trace_width 1.85)
+		(via_dia 0.90)
+		(via_drill 0.40)
+		(uvia_dia 0.50)
+		(uvia_drill 0.25)
+		(add_net "/FEED")
+		(add_net "/SMA_FEED")
+	)
+
+	# =========================================================================
+	# Footprint AE1: TI SWRA117D 2.4 GHz Inverted-F Antenna (IFA)
+	# Envelope: 15.2 x 5.7 mm, 0.50 mm trace, shorting stub 0.90 mm at X=-2.1 mm
+	# =========================================================================
+	(footprint "RF_Antenna:Texas_SWRA117D_2.4GHz_Right"
+		(layer "F.Cu")
+		(uuid "4c852491-438f-47f6-a1c4-afb659fdd9f2")
+		(at 30.00 18.00)
+		(descr "TI SWRA117D 2.4 GHz compact IFA antenna on 1.6 mm FR-4")
+		(tags "PCB antenna IFA 2.4GHz")
+		(property "Reference" "AE1" (at 4.55 -6.41 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Value" "Texas_SWRA117D_2.4GHz" (at 4.55 1.21 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Footprint" "RF_Antenna:Texas_SWRA117D_2.4GHz_Right" (at 0 0 0) (layer "F.Fab") (hide yes))
+		(attr exclude_from_pos_files exclude_from_bom)
+		(net_tie_pad_groups "1,2")
+		(fp_poly
+			(pts
+				(xy 2.45 -2.51) (xy 4.45 -2.51) (xy 4.45 -5.15) (xy 7.15 -5.15) (xy 7.15 -2.51) (xy 9.15 -2.51) (xy 9.15 -5.15)
+				(xy 11.85 -5.15) (xy 11.85 -0.71) (xy 11.35 -0.71) (xy 11.35 -4.65) (xy 9.65 -4.65) (xy 9.65 -2.01)
+				(xy 6.65 -2.01) (xy 6.65 -4.65) (xy 4.95 -4.65) (xy 4.95 -2.01) (xy 1.95 -2.01) (xy 1.95 -4.65) (xy 0.25 -4.65)
+				(xy 0.25 0.25) (xy -0.25 0.25) (xy -0.25 -4.65) (xy -1.65 -4.65) (xy -1.65 0.25) (xy -2.55 0.25)
+				(xy -2.55 0.006785) (xy -2.247583 0.006785) (xy -2.237742 0.054395) (xy -2.213674 0.096797) (xy -2.175731 0.129581)
+				(xy -2.167819 0.133935) (xy -2.125156 0.146043) (xy -2.076637 0.1453) (xy -2.031122 0.1324) (xy -2.012511 0.121787)
+				(xy -1.978868 0.086553) (xy -1.958309 0.041368) (xy -1.951778 -0.008158) (xy -1.960218 -0.056417)
+				(xy -1.977112 -0.088643) (xy -2.012372 -0.121313) (xy -2.057682 -0.141408) (xy -2.107267 -0.147982)
+				(xy -2.155353 -0.140092) (xy -2.188245 -0.123186) (xy -2.223185 -0.086416) (xy -2.242847 -0.041622)
+				(xy -2.247583 0.006785) (xy -2.55 0.006785) (xy -2.55 -5.15) (xy 2.45 -5.15) (xy 2.45 -2.51)
+			)
+			(stroke (width 0) (type solid))
+			(fill yes)
+			(layer "F.Cu")
+			(uuid "f7e1a49a-dacb-4aeb-ab33-d3117071f433")
+		)
+		# Pad 1: 50 Ohm Feed (connect rect 0.50 x 0.50 mm)
+		(pad "1" connect rect (at 0 0) (size 0.5 0.5) (layers "F.Cu") (net 2 "/FEED") (uuid "c36d4e5e-77ed-44f4-a552-7e0e665155fb"))
+		# Pad 2: Ground Shorting Stub (SMD rect 0.90 x 0.50 mm on F.Cu connecting solidly to GND plane)
+		(pad "2" smd rect (at -2.1 0) (size 0.9 0.5) (layers "F.Cu" "F.Mask") (zone_connect 2) (net 1 "GND") (uuid "5c24e8c4-3541-4c07-8a36-e8bb3ffc1cfd"))
+	)
+
+	# =========================================================================
+	# Footprint R1: 0805 SMD Resistor (49.9 Ohm 1%) - Absorbing State
+	# Placed directly adjacent to antenna feed (< 2 mm distance)
+	# Pad 1 on GND, Pad 2 on /FEED
+	# =========================================================================
+	(footprint "Resistor_SMD:R_0805_2012Metric"
+		(layer "F.Cu")
+		(uuid "b28c20b5-e53d-4017-8fb4-f1b5c0a78dbf")
+		(at 27.46 19.50)
+		(descr "Resistor SMD 0805 (2012 Metric), 49.9 Ohm 1% absorbing load")
+		(property "Reference" "R1" (at -2.5 0 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Value" "49.9R" (at 2.5 0 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric" (at 0 0 0) (layer "F.Fab") (hide yes))
+		(attr smd)
+		# Pad 1: GND (top) solidly connected to ground copper
+		(pad "1" smd roundrect (at 0 -0.9125) (size 1.4 1.025) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.25) (zone_connect 2) (net 1 "GND") (uuid "7ebc9125-47d0-44dd-b87d-9e2ce67a3100"))
+		# Pad 2: TERM_50R (bottom) connected to J1 Pin 1
+		(pad "2" smd roundrect (at 0 0.9125) (size 1.4 1.025) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.25) (net 4 "/TERM_50R") (uuid "334d994b-4f1f-4738-87ee-658eca4ab3fd"))
+	)
+
+	# =========================================================================
+	# Footprint J1: 2-pin 2.54 mm Jumper Header - State Switching
+	# Placed directly adjacent to R1 (< 3.5 mm)
+	# Pin 1 on /FEED (X=30.0), Pin 2 on GND (X=27.46)
+	# =========================================================================
+	(footprint "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
+		(layer "F.Cu")
+		(uuid "5111a279-3a43-4fe1-8479-3a859cbff0c0")
+		(at 30.00 23.00)
+		(descr "Through-hole pin header 1x03, 2.54mm pitch (3-State Termination Switching Jumper)")
+		(property "Reference" "J1" (at 0 -2.5 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Value" "PinHeader_1x03_P2.54mm" (at 0 2.5 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" (at 0 0 0) (layer "F.Fab") (hide yes))
+		(attr through_hole)
+		# Pin 1: TERM_50R (at X=-2.54, Y=0 relative -> X=27.46, Y=23.00)
+		(pad "1" thru_hole rect (at -2.54 0) (size 1.7 1.7) (drill 1.0) (layers "*.Cu" "*.Mask") (remove_unused_layers no) (net 4 "/TERM_50R") (uuid "bf2b4e4d-bf71-4bfe-8df5-94651205935a"))
+		# Pin 2: FEED Center Common (at X=0, Y=0 relative -> X=30.00, Y=23.00)
+		(pad "2" thru_hole circle (at 0 0) (size 1.7 1.7) (drill 1.0) (layers "*.Cu" "*.Mask") (remove_unused_layers no) (net 2 "/FEED") (uuid "70ba1674-3b38-495c-b816-9877837472ac"))
+		# Pin 3: GND Short (at X=2.54, Y=0 relative -> X=32.54, Y=23.00) solidly connected to GND plane
+		(pad "3" thru_hole circle (at 2.54 0) (size 1.7 1.7) (drill 1.0) (layers "*.Cu" "*.Mask") (remove_unused_layers no) (zone_connect 2) (net 1 "GND") (uuid "c8a4b3d2-e1f0-4987-a2b1-5e8c9d0f1a2b"))
+	)
+
+	# =========================================================================
+	# Footprint R2: 0805 SMD 0-Ohm Calibration Jumper Link (Series)
+	# Pad 1 at top (Y = 31.0875) on /FEED
+	# Pad 2 at bottom (Y = 32.9125) on /SMA_FEED
+	# =========================================================================
+	(footprint "Resistor_SMD:R_0805_2012Metric"
+		(layer "F.Cu")
+		(uuid "b9cea943-c3c6-4c7b-8362-00746f9b6fb9")
+		(at 30.00 32.00)
+		(descr "Resistor SMD 0805 0-Ohm calibration disconnect link")
+		(property "Reference" "R2" (at 2.0 0 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Value" "0R (Link)" (at -2.0 0 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric" (at 0 0 0) (layer "F.Fab") (hide yes))
+		(attr smd)
+		# Pad 1: FEED (top)
+		(pad "1" smd roundrect (at 0 -0.9125) (size 1.4 1.025) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.25) (net 2 "/FEED") (uuid "24028f8f-4b9b-4a2d-85fa-444b19e8240a"))
+		# Pad 2: SMA_FEED (bottom)
+		(pad "2" smd roundrect (at 0 0.9125) (size 1.4 1.025) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.25) (net 3 "/SMA_FEED") (uuid "4428780c-fec4-4dcb-b39d-492eae183fc6"))
+	)
+
+	# =========================================================================
+	# Footprint J2: Samtec Edge-Mount SMA Connector (1.6 mm PCB edge launch)
+	# Centered at (30.00, 43.40) so pads sit cleanly on the board edge
+	# =========================================================================
+	(footprint "Connector_Coaxial:SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount"
+		(layer "F.Cu")
+		(uuid "0e7a2fa0-fa5f-4871-82e2-c39c83da9cb4")
+		(at 30.00 43.40)
+		(descr "Samtec Edge-Mount SMA Connector 50 Ohm for 1.6 mm FR-4")
+		(property "Reference" "J2" (at -6.0 0 0) (layer "F.SilkS") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Value" "SMA_EdgeMount" (at 6.0 0 0) (layer "F.Fab") (effects (font (size 0.8 0.8) (thickness 0.12))))
+		(property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount" (at 0 0 0) (layer "F.Fab") (hide yes))
+		(attr smd)
+		# Pad 1: Center Signal Pin (at X=30.00, Y=43.40, size 1.27 x 2.20 mm)
+		(pad "1" smd roundrect (at 0 0) (size 1.27 2.20) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.20) (net 3 "/SMA_FEED") (uuid "7997dce8-d6a0-4f23-a4ce-742a8b06f3bd"))
+		# Pad 2: Left Ground Tabs (at X=27.175, Y=43.40)
+		(pad "2" smd roundrect (at -2.825 0) (size 1.35 2.20) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.20) (zone_connect 2) (net 1 "GND") (uuid "a0e28528-d733-4af1-adc6-b6540df004a7"))
+		(pad "2" smd roundrect (at -2.825 0) (size 1.35 2.20) (layers "B.Cu" "B.Mask") (roundrect_rratio 0.20) (zone_connect 2) (net 1 "GND") (uuid "f782af26-8e7b-4236-b3b3-1bf2365dafdb"))
+		# Pad 2: Right Ground Tabs (at X=32.825, Y=43.40)
+		(pad "2" smd roundrect (at 2.825 0) (size 1.35 2.20) (layers "F.Cu" "F.Mask") (roundrect_rratio 0.20) (zone_connect 2) (net 1 "GND") (uuid "2d9942ad-4f00-4660-a22e-774d0ccb05f8"))
+		(pad "2" smd roundrect (at 2.825 0) (size 1.35 2.20) (layers "B.Cu" "B.Mask") (roundrect_rratio 0.20) (zone_connect 2) (net 1 "GND") (uuid "c0030bb2-a205-4578-9318-7f92046e4e4a"))
+	)
+
+	# =========================================================================
+	# CPWG Transmission Line Tracks (W = 1.85 mm for 50 Ohm match on 1.6mm FR-4)
+	# Track endpoints are positioned so round caps stay within component pads!
+	# =========================================================================
+	# Track 0: From R1 Pad 2 to J1 Pin 1 (/TERM_50R)
+	(segment (start 27.46 20.4125) (end 27.46 23.00) (width 0.50) (layer "F.Cu") (net 4) (uuid "term-50r-track-1"))
+
+	# Track 1: From Antenna Feed (30, 18) to J1 Pin 1 (30, 23)
+	(segment (start 30.00 18.00) (end 30.00 23.00) (width 1.85) (layer "F.Cu") (net 2) (uuid "29ae7b64-1bc9-4fd1-af22-5e0b6d7f31b9"))
+	# Track 2: From J1 Pin 1 (30, 23) to R2 Pad 1 (ends at Y = 30.50 so cap stays inside Pad 1)
+	(segment (start 30.00 23.00) (end 30.00 30.50) (width 1.85) (layer "F.Cu") (net 2) (uuid "47e5d135-21ca-424e-9a3e-456340f8e4dd"))
+	# Track 3: From R2 Pad 2 (starts at Y = 33.50 so cap stays inside Pad 2) to SMA Pad 1 (30, 43.40)
+	(segment (start 30.00 33.50) (end 30.00 43.40) (width 1.85) (layer "F.Cu") (net 3) (uuid "abe57a32-3122-43fe-ad8f-8a810267a907"))
+
+	# =========================================================================
+	# Ground Stitching Vias (4x vias connecting F.Cu ground to B.Cu ground)
+	# Annular diameter 0.90 mm, drill 0.40 mm -> Annular width 0.25 mm >= 0.15 mm
+	# =========================================================================
+	(via (at 20.00 25.00) (size 0.90) (drill 0.40) (layers "F.Cu" "B.Cu") (net 1) (uuid "42d270bf-d5e8-4e99-9b77-5426279f8bf7"))
+	(via (at 20.00 35.00) (size 0.90) (drill 0.40) (layers "F.Cu" "B.Cu") (net 1) (uuid "75c55edf-779f-49e3-8651-b9f5ca82c7d1"))
+	(via (at 40.00 25.00) (size 0.90) (drill 0.40) (layers "F.Cu" "B.Cu") (net 1) (uuid "7b5b4393-8754-4507-8dc9-8f42f6b9ce9c"))
+	(via (at 40.00 35.00) (size 0.90) (drill 0.40) (layers "F.Cu" "B.Cu") (net 1) (uuid "0cacd066-3c0e-4f5e-8336-9e64a38052a9"))
+
+	# =========================================================================
+	# Board Outline on Edge_Cuts Layer (45.0 x 35.0 mm compact board)
+	# Bounding box: X in [10.0, 55.0], Y in [10.0, 45.0]
+	# =========================================================================
+	(gr_line (start 10.00 10.00) (end 55.00 10.00) (stroke (width 0.15) (type solid)) (layer "Edge.Cuts") (uuid "770b6c3d-1766-4491-bb4c-794051d4677c"))
+	(gr_line (start 55.00 10.00) (end 55.00 45.00) (stroke (width 0.15) (type solid)) (layer "Edge.Cuts") (uuid "81b5e3fb-af49-4ee1-a52c-0c4ebb5e4938"))
+	(gr_line (start 55.00 45.00) (end 10.00 45.00) (stroke (width 0.15) (type solid)) (layer "Edge.Cuts") (uuid "db744bb1-f821-457a-8445-7ee0bf253132"))
+	(gr_line (start 10.00 45.00) (end 10.00 10.00) (stroke (width 0.15) (type solid)) (layer "Edge.Cuts") (uuid "ce8a5bca-d2e7-4354-95ce-fa2acc2e24c9"))
+
+	# =========================================================================
+	# Silkscreen Documentation & Operating Instructions (min height >= 0.8 mm)
+	# =========================================================================
+	(gr_text "2.4 GHz RF BACKSCATTER TAG" (at 21.00 13.00 0) (layer "F.SilkS")
+		(effects (font (size 0.9 0.9) (thickness 0.14))) (uuid "27c00e6e-7aac-44e7-8721-e1e36ffa6f09"))
+	(gr_text "TI SWRA117D IFA" (at 46.00 14.50 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "1a9c4d5c-8b6e-4778-9577-dbdaee8301d0"))
+	(gr_text "DUAL TERMINATION:" (at 19.00 19.00 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "780933ff-76bd-42e8-9164-0d902d152924"))
+	(gr_text "JMP 1-2: 50R ABSORB" (at 19.00 21.00 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "f25b598e-09e4-422e-93f0-c960028cba13"))
+	(gr_text "JMP 2-3: 0R REFLECT" (at 19.00 23.00 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "bd9e9e5c-adba-471b-96a2-472a26e61da8"))
+	(gr_text "CPWG 50-OHM FEED" (at 42.00 28.00 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "64402ec3-c343-407f-bb52-fe15a230bd8a"))
+	(gr_text "CAL LINK R2" (at 42.00 32.00 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "7d20187a-25af-4276-8272-934a33ef7750"))
+	(gr_text "1.6mm SMA PORT" (at 20.00 42.00 0) (layer "F.SilkS")
+		(effects (font (size 0.8 0.8) (thickness 0.12))) (uuid "9a7d699b-9263-4235-8318-9c110a7e55f4"))
+
+	# =========================================================================
+	# Ground Zones (Net 1 GND) - Enforcing >= 0.50 mm Isolation Gap
+	# Note: Y < 18.0 mm is STRICT KEEPOUT zone for antenna radiating arm!
+	# F.Cu: Left Ground (X in [10.50, 28.50]) and Right Ground (X in [31.50, 54.50])
+	# B.Cu: Solid Ground with channel notch around J1 Pin 1, bridged solidly below Y=25.0 mm
+	# =========================================================================
+	# Zone 1: Left Top Ground on F.Cu (X in [10.50, 28.50], Y in [18.00, 44.50])
+	(zone
+		(net 1)
+		(net_name "GND")
+		(layer "F.Cu")
+		(uuid "a73ed6db-c2fe-4e97-9099-221c8623205f")
+		(hatch edge 0.5)
+		(connect_pads (clearance 0.50))
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill yes (thermal_gap 0.50) (thermal_bridge_width 0.50))
+		(polygon
+			(pts
+				(xy 10.50 18.00) (xy 28.50 18.00) (xy 28.50 19.20)
+				(xy 26.00 19.20) (xy 26.00 24.50) (xy 28.50 24.50)
+				(xy 28.50 44.50) (xy 10.50 44.50)
+			)
+		)
+		(filled_polygon
+			(pts
+				(xy 10.50 18.00) (xy 28.50 18.00) (xy 28.50 19.20)
+				(xy 26.00 19.20) (xy 26.00 24.50) (xy 28.50 24.50)
+				(xy 28.50 44.50) (xy 10.50 44.50)
+			)
+		)
+	)
+
+	# Zone 2: Right Top Ground on F.Cu (X in [31.50, 54.50], Y in [18.00, 44.50])
+	(zone
+		(net 1)
+		(net_name "GND")
+		(layer "F.Cu")
+		(uuid "f6bb0ed2-f238-4f3b-8026-18c35f4e4eba")
+		(hatch edge 0.5)
+		(connect_pads (clearance 0.50))
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill yes (thermal_gap 0.50) (thermal_bridge_width 0.50))
+		(polygon
+			(pts
+				(xy 31.50 18.00) (xy 54.50 18.00) (xy 54.50 44.50) (xy 31.50 44.50)
+			)
+		)
+		(filled_polygon
+			(pts
+				(xy 31.50 18.00) (xy 54.50 18.00) (xy 54.50 44.50) (xy 31.50 44.50)
+			)
+		)
+	)
+
+	# Zone 3: Continuous Bottom Ground on B.Cu
+	# Keeps X in [28.50, 31.50] clear between Y=18.0 and Y=25.0 around J1 Pin 1,
+	# and bridges solidly across X in [10.50, 54.50] for Y in [25.00, 44.50].
+	(zone
+		(net 1)
+		(net_name "GND")
+		(layer "B.Cu")
+		(uuid "cfec6ca3-a9d5-415c-94f9-320d237be3f7")
+		(hatch edge 0.5)
+		(connect_pads (clearance 0.50))
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill yes (thermal_gap 0.50) (thermal_bridge_width 0.50))
+		(polygon
+			(pts
+				(xy 10.50 18.00) (xy 26.00 18.00) (xy 26.00 24.50)
+				(xy 31.50 24.50) (xy 31.50 18.00) (xy 54.50 18.00)
+				(xy 54.50 44.50) (xy 10.50 44.50)
+			)
+		)
+		(filled_polygon
+			(pts
+				(xy 10.50 18.00) (xy 26.00 18.00) (xy 26.00 24.50)
+				(xy 31.50 24.50) (xy 31.50 18.00) (xy 54.50 18.00)
+				(xy 54.50 44.50) (xy 10.50 44.50)
+			)
+		)
+	)
+)

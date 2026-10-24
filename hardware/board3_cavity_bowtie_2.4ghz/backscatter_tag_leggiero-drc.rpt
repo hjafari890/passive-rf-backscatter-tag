@@ -1,0 +1,27 @@
+** Drc report for backscatter_tag_leggiero.kicad_pcb **
+** Created on 2026-10-21T12:16:22 **
+** Report includes: Errors, Warnings **
+
+** Found 1 DRC violations **
+[lib_footprint_issues]: Footprint 'Leggiero_Bowtie_2.4GHz' not found in library 'RF_Antenna'
+    Local override; warning
+    @(30.0000 mm, 16.0000 mm): Footprint AE1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Thermal relief connection to zone incomplete
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Silkscreen clearance
+    - Silkscreen clipped by solder mask
+    - PTH inside courtyard
+    - NPTH inside courtyard
+    - Footprint component type doesn't match footprint pads
+    - Footprint doesn't match copy in library
+
+** End of Report **

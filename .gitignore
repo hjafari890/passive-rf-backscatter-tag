@@ -1,0 +1,67 @@
+# =============================================================================
+# Git Ignore Configuration for Passive RF Backscatter Tag Repository
+# =============================================================================
+
+# External cloned third-party repositories
+open source systems/
+
+# Binary installers, executables, and desktop shortcuts
+*.exe
+*.dll
+*.so
+*.dylib
+*.lnk
+SDR setup/
+
+# Large PDF/PPTX presentation archives and research papers
+*.pptx
+Reports and Slides/
+Notes/
+paper/
+
+# Timestamped raw IQ snapshot dumps (.mat, .npz)
+*.mat
+*.npz
+output/snapshots/
+ant test/03_sdr_software/output/snapshots/
+software/output/snapshots/
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+venv/
+.venv/
+env/
+
+# KiCad temporary & backup files
+*.kicad_prl
+*-bak
+*.bak
+*.kicad_pcb-bak
+*.kicad_sch-bak
+.history/
+ant test/01_pcb_design/kicad_projects/.history/
+ant test/01_pcb_design/ready_for_milling/Archive_END_Platform_SWRA416_Helical/
+
+# Scratch altium analysis scripts
+ant test/06_utilities_and_archive/
+ant test/BS automation/
+
+# OS and IDE temporary files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OneDrive and Office temporary files
+~$*
+*.tmp
+
+# Agent workspace artifacts
+.agents/

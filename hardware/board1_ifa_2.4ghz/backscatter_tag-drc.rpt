@@ -1,0 +1,36 @@
+** Drc report for backscatter_tag.kicad_pcb **
+** Created on 2026-10-21T11:51:22 **
+** Report includes: Errors, Warnings **
+
+** Found 0 DRC violations **
+
+** Found 3 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(27.1750 mm, 43.4000 mm): Pad 2 [GND] of J2 on F.Cu
+    @(27.1750 mm, 43.4000 mm): Pad 2 [GND] of J2 on B.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(10.5000 mm, 18.0000 mm): Zone [GND] on F.Cu, priority 0
+    @(31.5000 mm, 18.0000 mm): Zone [GND] on F.Cu, priority 0
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(32.8250 mm, 43.4000 mm): Pad 2 [GND] of J2 on F.Cu
+    @(32.8250 mm, 43.4000 mm): Pad 2 [GND] of J2 on B.Cu
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Thermal relief connection to zone incomplete
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Silkscreen clearance
+    - Silkscreen clipped by solder mask
+    - PTH inside courtyard
+    - NPTH inside courtyard
+    - Footprint component type doesn't match footprint pads
+    - Footprint doesn't match copy in library
+
+** End of Report **

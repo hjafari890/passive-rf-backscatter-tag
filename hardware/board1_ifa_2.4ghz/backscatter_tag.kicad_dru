@@ -1,0 +1,19 @@
+(version 1)
+# CNC PCB Isolation Milling Custom Design Rules
+# Enforces strict >= 0.40 mm (0.50 mm configured) clearance across all copper items
+# Enforces minimum trace width >= 0.50 mm
+
+(rule "cnc_milling_isolation_clearance"
+   (constraint clearance (min 0.50mm))
+   (condition "true")
+)
+
+(rule "cnc_milling_trace_width"
+   (constraint track_width (min 0.50mm))
+   (condition "true")
+)
+
+(rule "edge_connector_board_edge_clearance"
+   (constraint edge_clearance (min 0.0mm))
+   (condition "A.Parent == 'J2' || B.Parent == 'J2'")
+)

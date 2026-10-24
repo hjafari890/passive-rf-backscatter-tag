@@ -1,0 +1,33 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,10.0.7*%
+%TF.CreationDate,2026-10-21T12:16:37+03:00*%
+%TF.ProjectId,backscatter_tag_leggiero,6261636b-7363-4617-9474-65725f746167,1.0*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Copper,L2,Bot*%
+%TF.FilePolarity,Positive*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 10.0.7) date 2026-10-21 12:16:37*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%TA.AperFunction,ComponentPad*%
+%ADD10R,1.700000X1.700000*%
+%TD*%
+%TA.AperFunction,ComponentPad*%
+%ADD11C,1.700000*%
+%TD*%
+G04 APERTURE END LIST*
+D10*
+%TO.P,J1,1*%
+%TO.N,/TERM_50R*%
+X27460000Y-28000000D03*
+D11*
+%TO.P,J1,2*%
+%TO.N,/FEED*%
+X30000000Y-28000000D03*
+%TO.P,J1,3*%
+%TO.N,GND*%
+X32540000Y-28000000D03*
+%TD*%
+M02*

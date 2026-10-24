@@ -1,0 +1,10 @@
+** Drc report for backscatter_tag_sub1ghz.kicad_pcb **
+** Created on 2026-10-21T11:43:21+0300 **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
