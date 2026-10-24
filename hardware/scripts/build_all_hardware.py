@@ -42,16 +42,22 @@ import subprocess
 import sys
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-KICAD_DIR = os.path.join(BASE_DIR, "kicad_pcb")
-KICAD_CLI = r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe"
+BOARD1_DIR = os.path.join(BASE_DIR, "board1_ifa_2.4ghz")
+BOARD2_DIR = os.path.join(BASE_DIR, "board2_meander_sub1ghz")
+
+KICAD_CLI = "kicad-cli"
+for p in [r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe"]:
+    if os.path.isfile(p):
+        KICAD_CLI = p
+        break
 
 
 def build_board1_24ghz():
     print("--- Building Board 1: 2.4 GHz Tag ---")
-    sch_path = os.path.join(KICAD_DIR, "backscatter_tag.kicad_sch")
-    pcb_path = os.path.join(KICAD_DIR, "backscatter_tag.kicad_pcb")
-    pro_path = os.path.join(KICAD_DIR, "backscatter_tag.kicad_pro")
-    dru_path = os.path.join(KICAD_DIR, "backscatter_tag.kicad_dru")
+    sch_path = os.path.join(BOARD1_DIR, "backscatter_tag.kicad_sch")
+    pcb_path = os.path.join(BOARD1_DIR, "backscatter_tag.kicad_pcb")
+    pro_path = os.path.join(BOARD1_DIR, "backscatter_tag.kicad_pro")
+    dru_path = os.path.join(BOARD1_DIR, "backscatter_tag.kicad_dru")
 
     # 1. Ensure project file has both netclasses
     with open(pro_path, "r", encoding="utf-8") as f:
@@ -441,17 +447,17 @@ def build_board1_24ghz():
 
 def build_board2_sub1ghz():
     print("--- Building Board 2: Sub-1GHz Tag (868/915 MHz SWRA416) ---")
-    sch_path = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_sch")
-    pcb_path = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_pcb")
-    pro_path = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_pro")
-    dru_path = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_dru")
+    sch_path = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_sch")
+    pcb_path = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_pcb")
+    pro_path = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_pro")
+    dru_path = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_dru")
 
     # 1. Project file
-    shutil.copyfile(os.path.join(KICAD_DIR, "backscatter_tag.kicad_pro"), pro_path)
-    shutil.copyfile(os.path.join(KICAD_DIR, "backscatter_tag.kicad_dru"), dru_path)
+    shutil.copyfile(os.path.join(BOARD1_DIR, "backscatter_tag.kicad_pro"), pro_path)
+    shutil.copyfile(os.path.join(BOARD1_DIR, "backscatter_tag.kicad_dru"), dru_path)
 
     # 2. Schematic for Board 2
-    with open(os.path.join(KICAD_DIR, "backscatter_tag.kicad_sch"), "r", encoding="utf-8") as f:
+    with open(os.path.join(BOARD1_DIR, "backscatter_tag.kicad_sch"), "r", encoding="utf-8") as f:
         sch = f.read()
 
     sch = sch.replace('(title "2.4 GHz RF Backscatter Tag - M2")', '(title "Sub-1GHz (868/915 MHz) RF Backscatter Tag - M2 Option B")')
@@ -621,30 +627,30 @@ def main():
     # Verify Board 1
     run_checks_and_exports_for_board(
         board_name="Board 1 (2.4 GHz)",
-        sch_file=os.path.join(KICAD_DIR, "backscatter_tag.kicad_sch"),
-        pcb_file=os.path.join(KICAD_DIR, "backscatter_tag.kicad_pcb"),
-        erc_rpt=os.path.join(KICAD_DIR, "erc_report.txt"),
-        drc_rpt=os.path.join(KICAD_DIR, "drc_report.txt"),
-        gerber_dir=os.path.join(KICAD_DIR, "gerbers"),
-        dxf_dir=os.path.join(KICAD_DIR, "dxf"),
-        render_png=os.path.join(KICAD_DIR, "pcb_render.png"),
+        sch_file=os.path.join(BOARD1_DIR, "backscatter_tag.kicad_sch"),
+        pcb_file=os.path.join(BOARD1_DIR, "backscatter_tag.kicad_pcb"),
+        erc_rpt=os.path.join(BOARD1_DIR, "backscatter_tag-erc.rpt"),
+        drc_rpt=os.path.join(BOARD1_DIR, "backscatter_tag-drc.rpt"),
+        gerber_dir=os.path.join(BOARD1_DIR, "gerbers"),
+        dxf_dir=os.path.join(BOARD1_DIR, "dxf"),
+        render_png=os.path.join(BOARD1_DIR, "preview.png"),
     )
 
     # Verify Board 2
     run_checks_and_exports_for_board(
         board_name="Board 2 (Sub-1GHz)",
-        sch_file=os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_sch"),
-        pcb_file=os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_pcb"),
-        erc_rpt=os.path.join(KICAD_DIR, "erc_report_sub1ghz.txt"),
-        drc_rpt=os.path.join(KICAD_DIR, "drc_report_sub1ghz.txt"),
-        gerber_dir=os.path.join(KICAD_DIR, "gerbers_sub1ghz"),
-        dxf_dir=os.path.join(KICAD_DIR, "dxf_sub1ghz"),
-        render_png=os.path.join(KICAD_DIR, "pcb_render_sub1ghz.png"),
+        sch_file=os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_sch"),
+        pcb_file=os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_pcb"),
+        erc_rpt=os.path.join(BOARD2_DIR, "erc_report_sub1ghz.txt"),
+        drc_rpt=os.path.join(BOARD2_DIR, "drc_report_sub1ghz.txt"),
+        gerber_dir=os.path.join(BOARD2_DIR, "gerbers"),
+        dxf_dir=os.path.join(BOARD2_DIR, "dxf"),
+        render_png=os.path.join(BOARD2_DIR, "preview.png"),
     )
 
     print("\n=================================================================")
-    print("SUCCESS: Both boards passed 100% of ERC and DRC checks with 0 errors!")
-    print("CAM files exported to gerbers/, dxf/, gerbers_sub1ghz/, dxf_sub1ghz/")
+    print("SUCCESS: Both boards passed 100% of ERC and DRC checks!")
+    print("CAM files exported to gerbers/ and dxf/")
     print("=================================================================")
 
 

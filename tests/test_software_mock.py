@@ -66,3 +66,37 @@ class TestSoftwareMock:
         app.toggle_streaming()
         assert app.worker is None
         app.root.destroy()
+
+    def test_gui_cli_help(self) -> None:
+        """Verify that backscatter_gui_app.py --help executes cleanly with code 0."""
+        import subprocess
+
+        cmd = [
+            sys.executable,
+            os.path.join(REPO_ROOT, "software", "backscatter_gui_app.py"),
+            "--help",
+        ]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        assert res.returncode == 0, f"GUI --help failed: {res.stderr}"
+        assert "--mock" in res.stdout, "Expected --mock flag documented in help output"
+
+    def test_plot_backscatter_results(self, tmp_path) -> None:
+        """Verify publication plotting functions in software/plot_backscatter_results.py."""
+        from software.plot_backscatter_results import (
+            plot_cw_step_response,
+            plot_cw_iq_trajectory,
+        )
+
+        n_samples = 1000
+        iq_cw = np.random.normal(0, 0.01, n_samples) + 1j * np.random.normal(0, 0.01, n_samples)
+        # Add step in second half
+        iq_cw[500:] += 0.05 + 0.05j
+
+        out_step = str(tmp_path / "test_step.png")
+        out_traj = str(tmp_path / "test_traj.png")
+
+        plot_cw_step_response(iq_cw, sample_rate=2e6, output_path=out_step)
+        plot_cw_iq_trajectory(iq_cw, sample_rate=2e6, output_path=out_traj)
+
+        assert os.path.isfile(out_step) and os.path.getsize(out_step) > 1000
+        assert os.path.isfile(out_traj) and os.path.getsize(out_traj) > 1000

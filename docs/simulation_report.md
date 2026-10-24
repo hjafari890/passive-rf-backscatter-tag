@@ -126,7 +126,7 @@ All simulations, transmission-line synthesis, and CNC toolpath isolations use th
 
 ## 3. Board 1: 2.44 GHz Inverted-F Tag (TI SWRA117D Adaptation)
 
-![Board 1 Preview](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/board1_preview.png)
+![Board 1 Preview](assets/board1_preview.png)
 
 ### 3.1 Antenna Topology and Geometry
 The Inverted-F Antenna (**IFA**) is a compact modified quarter-wave inverted-L antenna with a parallel shorting stub that provides inductive reactance to cancel the capacitive reactance of the low-profile top arm. 
@@ -185,7 +185,7 @@ A critical engineering question in backscatter tag design is the ground plane di
 
 ## 4. Board 2: Sub-1GHz Planar Meander Tag (868 / 915 MHz)
 
-![Board 2 Preview](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/board2_preview.png)
+![Board 2 Preview](assets/board2_preview.png)
 
 ### 4.1 Engineering Rationale: Helical Vias vs. Planar Meander
 The original benchmark design from the END-Platform (`6gend-rf-db-2` / TI SWRA416) required a helical coil winding across top and bottom layers through **19 plated through-hole vias** with $0.3\,\text{mm}$ annular rings. 
@@ -214,7 +214,7 @@ To overcome this constraint, Board 2 implements an innovative **Single-Sided Pla
 
 ## 5. Board 3: 2.44 GHz Leggiero Cavity-Backed Bowtie Tag
 
-![Board 3 Preview](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/board3_preview.png)
+![Board 3 Preview](assets/board3_preview.png)
 
 ### 5.1 Theoretical Background: Leggiero Payload Transparency
 Reverse-engineered from the open-source platform of the landmark paper *"Analog WiFi Backscatter with Payload Transparency"*, Board 3 adapts a wideband bowtie aperture designed to modulate ambient Wi-Fi packets without corrupting the underlying OFDM subcarrier decoding.
@@ -257,7 +257,7 @@ Extracted via direct binary and ASCII parser scripts (`analyze_leggiero_antenna.
 > 2. **Controlled Image Currents:** By providing a continuous boundary around the aperture, displacement currents return symmetrically, eliminating parasitic substrate edge radiation.
 > 3. **Zero-Via Single-Sided Routing:** In multi-layer designs, top and bottom grounds are stitched with via fences. In our single-sided milling adaptation, the continuous U-cavity on `F.Cu` maintains ground continuity around both sides of the feedline without requiring a single via.
 
-![Leggiero Extracted Plot](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/leggiero_extracted_plot.png)
+![Leggiero Extracted Plot](assets/leggiero_extracted_plot.png)
 
 ---
 
@@ -271,22 +271,22 @@ Both 2.44 GHz designs (Board 1 and Board 3) and the Sub-1GHz design (Board 2) de
 - **Board 2 (Meander):** $S_{11} = -19.2\,\text{dB}$ at $868\,\text{MHz}$
 - **Board 3 (Leggiero):** Wideband match with $S_{11} < -15\,\text{dB}$ spanning $2.35 - 2.52\,\text{GHz}$
 
-![S11 Comparison](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/s11_comparison.png)
+![S11 Comparison](assets/s11_comparison.png)
 
 ### 6.2 Complex Input Impedance Curves
 The real ($R_{\text{in}}$) and imaginary ($X_{\text{in}}$) input impedance profiles verify zero reactance ($X_{\text{in}} = 0\,\Omega$) at the target center frequencies, with $R_{\text{in}} \approx 50\,\Omega$:
 
-![Impedance Curves](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/impedance_curves.png)
+![Impedance Curves](assets/impedance_curves.png)
 
 ### 6.3 Smith Chart Load Modulation States
 The complex reflection coefficient trajectories demonstrate clean separation between the Absorbing state (located at the center of the Smith chart, $\Gamma \approx 0$) and the Reflecting short state (located on the left perimeter, $\Gamma \approx -1.0, \angle 180^\circ$):
 
-![Smith Chart States](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/smith_chart_states.png)
+![Smith Chart States](assets/smith_chart_states.png)
 
 ### 6.4 Differential Radar Cross Section ($\Delta \sigma$)
 The Differential RCS curves across frequency demonstrate peak backscatter contrast precisely aligned with the target carrier frequencies:
 
-![Differential RCS](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/differential_rcs.png)
+![Differential RCS](assets/differential_rcs.png)
 
 ---
 
@@ -329,16 +329,16 @@ To guarantee reliable mechanical fabrication on desktop CNC isolation routers (e
    - **Board Edges:** Outlined on layer `Edge_Cuts` with $2.0\,\text{mm}$ contour routing offset.
 
 ### Ready-for-Milling File Paths:
-- **Board 1 (IFA):** [`ant test/ready_for_milling/Board1_2.4GHz_IFA_Tag/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/ready_for_milling/Board1_2.4GHz_IFA_Tag/)
+- **Board 1 (IFA):** [`hardware/board1_ifa_2.4ghz/`](../hardware/board1_ifa_2.4ghz/)
   - Top Copper Gerber: `backscatter_tag_swra117d-F_Cu.gtl`
   - Top Isolation DXF: `backscatter_tag_swra117d-F_Cu.dxf`
   - Board Outline: `backscatter_tag_swra117d-Edge_Cuts.gm1`
   - Drill File: `backscatter_tag_swra117d.drl`
-- **Board 2 (Meander):** [`ant test/ready_for_milling/Board2_Sub1GHz_Planar_Tag/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/ready_for_milling/Board2_Sub1GHz_Planar_Tag/)
+- **Board 2 (Meander):** [`hardware/board2_meander_sub1ghz/`](../hardware/board2_meander_sub1ghz/)
   - Top Copper Gerber: `backscatter_tag_sub1ghz_planar-F_Cu.gtl`
   - Top Isolation DXF: `backscatter_tag_sub1ghz_planar-F_Cu.dxf`
   - Drill File: `backscatter_tag_sub1ghz_planar.drl`
-- **Board 3 (Leggiero Bowtie):** [`ant test/ready_for_milling/Board3_2.4GHz_Leggiero_Bowtie_Tag/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/ready_for_milling/Board3_2.4GHz_Leggiero_Bowtie_Tag/)
+- **Board 3 (Leggiero Bowtie):** [`hardware/board3_cavity_bowtie_2.4ghz/`](../hardware/board3_cavity_bowtie_2.4ghz/)
   - Top Copper Gerber: `backscatter_tag_leggiero-F_Cu.gtl`
   - Top Isolation DXF: `backscatter_tag_leggiero-F_Cu.dxf`
   - Drill File: `backscatter_tag_leggiero.drl`
@@ -373,17 +373,17 @@ The validation methodology utilizes the **NI USRP-2900 (B200)** software-defined
   1. A sharp step increase in power: $\Delta P_{\text{rx}} \approx +2.1\,\text{dB}$ (Board 1), $+3.8\,\text{dB}$ (Board 2).
   2. A sudden phase shift and radial expansion in the complex I/Q constellation plane:
 
-![CW Step Response](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/cw_step_response.png)
+![CW Step Response](assets/cw_step_response.png)
 
-![CW IQ Trajectory](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/cw_iq_trajectory.png)
+![CW IQ Trajectory](assets/cw_iq_trajectory.png)
 
 ### 9.2 Mode 2: Ambient Wi-Fi Packet Backscatter Validation
 - **Rx Configuration:** Tunes `RX2` to Wi-Fi Channel 6 ($2437\,\text{MHz}$) at $5\,\text{MS/s}$.
 - **Measurement Signature:** Wi-Fi packet bursts from commercial access points exhibit differential power shifts across beacon preambles and payload intervals:
 
-![Wi-Fi Ambient Backscatter](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/wifi_ambient_backscatter.png)
+![Wi-Fi Ambient Backscatter](assets/wifi_ambient_backscatter.png)
 
-![Wi-Fi IQ Constellation](file:///C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/wifi_iq_constellation.png)
+![Wi-Fi IQ Constellation](assets/wifi_iq_constellation.png)
 
 ### 9.3 Signal Processing Metrics Implemented in Software
 The SDR analysis engine continuously calculates four quantitative metrics:

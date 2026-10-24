@@ -3,9 +3,9 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "10.0.7"
+      "Version": "9.0.7"
     },
-    "CreationDate": "2026-10-21T12:16:37+03:00"
+    "CreationDate": "2026-10-24T22:37:34+03:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -99,8 +99,8 @@
       "Type": "Dielectric",
       "Thickness": 1.51,
       "Material": "FR4",
-      "DielectricConstant": "4,4",
-      "LossTangent": "0,02",
+      "DielectricConstant": "4.4",
+      "LossTangent": "0.02",
       "Name": "F.Cu/B.Cu",
       "Notes": "Type: dielectric layer 1 (from F.Cu to B.Cu)"
     },

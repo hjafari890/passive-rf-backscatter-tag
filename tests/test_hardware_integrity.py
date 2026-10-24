@@ -85,3 +85,37 @@ class TestHardwareIntegrity:
         # Check for via definitions
         vias = re.findall(r"\(via\s+", content)
         assert len(vias) == 0, f"Found {len(vias)} forbidden vias in single-sided layout {pcb_path}"
+
+    @pytest.mark.parametrize("board_dir,base_name", [
+        (BOARD1_DIR, "backscatter_tag"),
+        (BOARD2_DIR, "backscatter_tag_sub1ghz"),
+        (BOARD3_DIR, "backscatter_tag_leggiero"),
+    ])
+    def test_kicad_cli_load_and_drc(self, board_dir: str, base_name: str, tmp_path) -> None:
+        """Verify that KiCad CLI loads each board cleanly without load errors and generates a DRC report."""
+        import subprocess
+
+        kicad_cli = None
+        for p in [
+            r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe",
+            r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe",
+            r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe",
+        ]:
+            if os.path.isfile(p):
+                kicad_cli = p
+                break
+
+        if not kicad_cli:
+            pytest.skip("KiCad CLI not installed on host")
+
+        pcb_path = os.path.join(board_dir, f"{base_name}.kicad_pcb")
+        rpt_path = str(tmp_path / f"{base_name}_drc.rpt")
+
+        res = subprocess.run(
+            [kicad_cli, "pcb", "drc", "--output", rpt_path, pcb_path],
+            capture_output=True,
+            text=True,
+        )
+        assert "Failed to load board" not in res.stderr, f"KiCad CLI failed to load {pcb_path}: {res.stderr}"
+        assert res.returncode == 0, f"KiCad DRC failed with code {res.returncode}: {res.stderr}"
+        assert os.path.isfile(rpt_path), f"DRC report was not created: {rpt_path}"

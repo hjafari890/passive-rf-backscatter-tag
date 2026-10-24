@@ -73,3 +73,34 @@ class TestSimulationModels:
         # Contrast between open and short
         delta_phase = compute_delta_gamma(gamma_open, gamma_short)
         assert abs(delta_phase - 2.0) < 1e-4
+
+    def test_simulate_all_execution(self, tmp_path) -> None:
+        """Verify that simulation/simulate_all.py runs and exports CSVs and PNGs without error."""
+        import subprocess
+
+        cmd = [
+            sys.executable,
+            os.path.join(REPO_ROOT, "simulation", "simulate_all.py"),
+            "--outdir",
+            str(tmp_path),
+            "--num-points",
+            "51",
+        ]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        assert res.returncode == 0, f"simulate_all.py failed: {res.stderr}"
+
+        # Verify key generated outputs
+        expected_csvs = [
+            "s11_244ghz.csv",
+            "s11_sub1ghz.csv",
+            "load_modulation_states.csv",
+        ]
+        expected_pngs = [
+            "s11_comparison.png",
+            "smith_chart_states.png",
+        ]
+
+        for fname in expected_csvs + expected_pngs:
+            out_file = tmp_path / fname
+            assert out_file.is_file(), f"Expected simulation output missing: {fname}"
+            assert out_file.stat().st_size > 0, f"Simulation output file is empty: {fname}"

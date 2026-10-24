@@ -21,24 +21,30 @@ import subprocess
 import sys
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-KICAD_DIR = os.path.join(BASE_DIR, "kicad_pcb")
-KICAD_CLI = r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe"
+BOARD1_DIR = os.path.join(BASE_DIR, "board1_ifa_2.4ghz")
+BOARD2_DIR = os.path.join(BASE_DIR, "board2_meander_sub1ghz")
 
-PRO_PATH = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_pro")
-DRU_PATH = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_dru")
-SCH_PATH = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_sch")
-PCB_PATH = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_pcb")
+KICAD_CLI = "kicad-cli"
+for p in [r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe"]:
+    if os.path.isfile(p):
+        KICAD_CLI = p
+        break
 
-ERC_RPT = os.path.join(KICAD_DIR, "erc_report_sub1ghz.txt")
-DRC_RPT = os.path.join(KICAD_DIR, "drc_report_sub1ghz.txt")
-GERBERS_DIR = os.path.join(KICAD_DIR, "gerbers_sub1ghz")
-DXF_DIR = os.path.join(KICAD_DIR, "dxf_sub1ghz")
-RENDER_PNG = os.path.join(KICAD_DIR, "pcb_render_sub1ghz.png")
+PRO_PATH = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_pro")
+DRU_PATH = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_dru")
+SCH_PATH = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_sch")
+PCB_PATH = os.path.join(BOARD2_DIR, "backscatter_tag_sub1ghz.kicad_pcb")
+
+ERC_RPT = os.path.join(BOARD2_DIR, "erc_report_sub1ghz.txt")
+DRC_RPT = os.path.join(BOARD2_DIR, "drc_report_sub1ghz.txt")
+GERBERS_DIR = os.path.join(BOARD2_DIR, "gerbers")
+DXF_DIR = os.path.join(BOARD2_DIR, "dxf")
+RENDER_PNG = os.path.join(BOARD2_DIR, "preview.png")
 
 
 def create_project_file() -> None:
     """Generate backscatter_tag_sub1ghz.kicad_pro."""
-    with open(os.path.join(KICAD_DIR, "backscatter_tag.kicad_pro"), "r", encoding="utf-8") as f:
+    with open(os.path.join(BOARD1_DIR, "backscatter_tag.kicad_pro"), "r", encoding="utf-8") as f:
         pro_data = json.load(f)
 
     with open(PRO_PATH, "w", encoding="utf-8") as f:

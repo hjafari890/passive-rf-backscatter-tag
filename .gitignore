@@ -25,6 +25,7 @@ paper/
 output/snapshots/
 ant test/03_sdr_software/output/snapshots/
 software/output/snapshots/
+simulation/output/
 
 # Python caches and virtual environments
 __pycache__/

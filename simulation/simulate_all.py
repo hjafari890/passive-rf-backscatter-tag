@@ -25,35 +25,58 @@ import math
 import sys
 from pathlib import Path
 
-# Add project root to path
+# Add project root and simulation directory to path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import matplotlib
 matplotlib.use("Agg")  # Non-interactive backend
 import matplotlib.pyplot as plt
 import numpy as np
 
-from antenna_simulation.antenna_models import (
-    SPEED_OF_LIGHT,
-    PlanarMeanderMonopole,
-    PlanarMonopole244,
-    Substrate,
-    TI_SWRA117D_IFA,
-    TI_SWRA416_Helical,
-    calculate_resonance,
-    calculate_s11,
-    calculate_zin,
-)
-from antenna_simulation.rcs_simulation import (
-    ABSORBING_50OHM,
-    REFLECTING_OPEN,
-    REFLECTING_SHORT,
-    analyze_all_state_pairs,
-    compute_delta_gamma,
-    compute_differential_rcs,
-    verify_delta_gamma_contrast,
-)
+try:
+    from simulation.antenna_models import (
+        SPEED_OF_LIGHT,
+        PlanarMeanderMonopole,
+        PlanarMonopole244,
+        Substrate,
+        TI_SWRA117D_IFA,
+        TI_SWRA416_Helical,
+        calculate_resonance,
+        calculate_s11,
+        calculate_zin,
+    )
+    from simulation.rcs_simulation import (
+        ABSORBING_50OHM,
+        REFLECTING_OPEN,
+        REFLECTING_SHORT,
+        analyze_all_state_pairs,
+        compute_delta_gamma,
+        compute_differential_rcs,
+        verify_delta_gamma_contrast,
+    )
+except ImportError:
+    from antenna_models import (
+        SPEED_OF_LIGHT,
+        PlanarMeanderMonopole,
+        PlanarMonopole244,
+        Substrate,
+        TI_SWRA117D_IFA,
+        TI_SWRA416_Helical,
+        calculate_resonance,
+        calculate_s11,
+        calculate_zin,
+    )
+    from rcs_simulation import (
+        ABSORBING_50OHM,
+        REFLECTING_OPEN,
+        REFLECTING_SHORT,
+        analyze_all_state_pairs,
+        compute_delta_gamma,
+        compute_differential_rcs,
+        verify_delta_gamma_contrast,
+    )
 
 
 def export_csv(filename: Path, headers: list[str], rows: list[list]) -> None:
@@ -520,7 +543,7 @@ def main() -> int:
     parser.add_argument(
         "--outdir",
         type=Path,
-        default=PROJECT_ROOT / "antenna_simulation" / "output",
+        default=PROJECT_ROOT / "simulation" / "output",
         help="Target directory for CSV data tables and PNG figures.",
     )
     parser.add_argument(

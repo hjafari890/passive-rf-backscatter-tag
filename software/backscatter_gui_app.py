@@ -15,6 +15,7 @@ Features:
 
 from __future__ import annotations
 
+import argparse
 import os
 import queue
 import sys
@@ -1018,8 +1019,18 @@ class BackscatterTkGUI:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Robust Real-Time Backscatter Tag SDR Acquisition & Detection Dashboard"
+    )
+    parser.add_argument(
+        "--mock",
+        action="store_true",
+        help="Force offline mock streaming mode without requiring physical SDR hardware",
+    )
+    args = parser.parse_args()
+
     root = tk.Tk()
-    app = BackscatterTkGUI(root)
+    app = BackscatterTkGUI(root, force_mock=args.mock)
     root.protocol("WM_DELETE_WINDOW", lambda: (app.worker.stop() if app.worker else None, root.destroy()))
     root.mainloop()
 
