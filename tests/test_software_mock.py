@@ -129,21 +129,18 @@ class TestSoftwareMock:
         """Verify that backscatter_detector_gnuradio.py --help executes cleanly with code 0."""
         import subprocess
 
-        # Discover python with gnuradio
-        py_exe = sys.executable
-        radioconda_py = os.path.expanduser(r"~\radioconda\python.exe")
-        if os.path.isfile(radioconda_py):
-            py_exe = radioconda_py
+        script_path = os.path.join(REPO_ROOT, "software", "gnuradio", "backscatter_detector_gnuradio.py")
 
-        cmd = [
-            py_exe,
-            os.path.join(REPO_ROOT, "software", "gnuradio", "backscatter_detector_gnuradio.py"),
-            "--help",
-        ]
-        try:
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
-            if res.returncode == 0:
-                assert "--help" in res.stdout or "-h" in res.stdout
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            pytest.skip("GNU Radio / Radioconda environment not available for execution test")
+        # Test with current Python environment (standard Python)
+        res = subprocess.run([sys.executable, script_path, "--help"], capture_output=True, text=True, timeout=10)
+        assert res.returncode == 0, f"GNU Radio script --help failed with standard Python: {res.stderr}"
+        assert "--help" in res.stdout or "-h" in res.stdout
+
+        # Also test with Radioconda Python if available
+        for p in [os.path.expanduser(r"~\radioconda\python.exe"), r"C:\radioconda\python.exe"]:
+            if os.path.isfile(p):
+                res_rc = subprocess.run([p, script_path, "--help"], capture_output=True, text=True, timeout=10)
+                assert res_rc.returncode == 0, f"GNU Radio script --help failed with Radioconda: {res_rc.stderr}"
+                assert "--help" in res_rc.stdout or "-h" in res_rc.stdout
+                break
 

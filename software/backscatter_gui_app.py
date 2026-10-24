@@ -23,6 +23,9 @@ import threading
 import time
 from typing import Any, Dict, Optional, Tuple
 
+import warnings
+warnings.filterwarnings("ignore", message=r".*A NumPy version >=.*and <.*is required for this version of SciPy.*", category=UserWarning)
+
 import numpy as np
 import scipy.io
 import scipy.signal

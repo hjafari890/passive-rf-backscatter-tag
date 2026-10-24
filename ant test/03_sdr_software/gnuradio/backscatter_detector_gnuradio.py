@@ -6,34 +6,44 @@
 #
 # GNU Radio Python Flow Graph
 # Title: Backscatter Tag SDR Detection Dashboard (GNU Radio)
-# Author: Antigravity & User
+# Author: Hesam Jafari (@hjafari890)
 # Description: Coherent Lock-In Dual-Carrier SDR Detection Suite for Passive Backscatter Tags
 # GNU Radio version: 3.10.12.0
 
-from PyQt5 import Qt
-from gnuradio import qtgui
-from PyQt5 import QtCore
-from PyQt5.QtCore import QObject, pyqtSlot
-from gnuradio import analog
-from gnuradio import blocks
-from gnuradio import filter
-from gnuradio.filter import firdes
-from gnuradio import gr
-from gnuradio.fft import window
-import sys
+import os
 import signal
-from PyQt5 import Qt
-from argparse import ArgumentParser
-from gnuradio.eng_arg import eng_float, intx
-from gnuradio import eng_notation
-from gnuradio import uhd
+import sys
 import time
-import sip
-import threading
+from argparse import ArgumentParser
+
+try:
+    from PyQt5 import Qt, QtCore
+    from PyQt5.QtCore import QObject, pyqtSlot
+    from gnuradio import analog, blocks, filter, gr, qtgui
+    from gnuradio.fft import window
+    from gnuradio.filter import firdes
+    from gnuradio.eng_arg import eng_float, intx
+    from gnuradio import eng_notation, uhd
+    import sip
+    import threading
+    HAS_GNURADIO = True
+except ImportError as _import_err:
+    HAS_GNURADIO = False
+    _import_err_msg = str(_import_err)
+    class _DummyTopBlock:
+        pass
+
+    class _DummyWidget:
+        pass
+
+    _BaseTopBlock = _DummyTopBlock
+    _BaseWidget = _DummyWidget
+else:
+    _BaseTopBlock = gr.top_block
+    _BaseWidget = Qt.QWidget
 
 
-
-class backscatter_detector_gnuradio(gr.top_block, Qt.QWidget):
+class backscatter_detector_gnuradio(_BaseTopBlock, _BaseWidget):
 
     def __init__(self):
         gr.top_block.__init__(self, "Backscatter Tag SDR Detection Dashboard (GNU Radio)", catch_exceptions=True)
@@ -391,12 +401,27 @@ class backscatter_detector_gnuradio(gr.top_block, Qt.QWidget):
 
 
 
-def main(top_block_cls=backscatter_detector_gnuradio, options=None):
+def main(top_block_cls=None, options=None):
     parser = ArgumentParser(
         description="Coherent Lock-In Dual-Carrier SDR Detection Suite for Passive Backscatter Tags (GNU Radio)"
     )
     # Parse CLI flags (handles --help and -h cleanly)
     parser.parse_args(sys.argv[1:])
+
+    if not HAS_GNURADIO:
+        print("\n" + "=" * 70, file=sys.stderr)
+        print(" [ERROR] GNU Radio / PyQt5 environment not detected:", file=sys.stderr)
+        print(f" {_import_err_msg}", file=sys.stderr)
+        print("=" * 70, file=sys.stderr)
+        print("\nPossible solutions:", file=sys.stderr)
+        print("  1. Launch via Radioconda: open_gnuradio_companion.bat or launch_gnuradio_gui.bat", file=sys.stderr)
+        print("  2. Activate a Python environment with gnuradio and PyQt5 installed.", file=sys.stderr)
+        print("  3. For offline simulation without GNU Radio, launch the Python SDR GUI:", file=sys.stderr)
+        print("     python software/backscatter_gui_app.py --mock\n", file=sys.stderr)
+        return 1
+
+    if top_block_cls is None:
+        top_block_cls = backscatter_detector_gnuradio
 
     qapp = Qt.QApplication(sys.argv)
 

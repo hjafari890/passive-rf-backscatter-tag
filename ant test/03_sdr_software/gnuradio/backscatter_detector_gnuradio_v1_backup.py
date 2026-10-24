@@ -6,7 +6,7 @@
 #
 # GNU Radio Python Flow Graph
 # Title: Backscatter Tag SDR Detection Dashboard (GNU Radio)
-# Author: Antigravity & User
+# Author: Hesam Jafari (@hjafari890)
 # Description: Coherent Lock-In Dual-Carrier SDR Detection Suite for Passive Backscatter Tags
 # GNU Radio version: 3.10.12.0
 

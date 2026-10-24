@@ -43,7 +43,11 @@ end
 
 % Select the latest snapshot by date
 [~, idx] = max([mat_files.datenum]);
-target_file = fullfile(mat_files(idx).folder, mat_files(idx).name);
+if isfield(mat_files(idx), 'folder') && ~isempty(mat_files(idx).folder)
+    target_file = fullfile(mat_files(idx).folder, mat_files(idx).name);
+else
+    target_file = fullfile(snapshots_dir, mat_files(idx).name);
+end
 fprintf('Loading latest backscatter snapshot: %s\n', mat_files(idx).name);
 
 data = load(target_file);
@@ -131,8 +135,28 @@ ylabel('Quadrature (Q)', 'FontSize', 11);
 % Subplot 3: Power Spectral Density (PSD)
 subplot(2, 2, 4);
 nfft = 2048;
-[pxx, f] = pwelch(iq, hamming(nfft), round(nfft/2), nfft, Fs, 'centered');
-plot(f / 1e6, 10 * log10(pxx), 'Color', [0.47, 0.67, 0.19], 'LineWidth', 1.5);
+if exist('pwelch', 'file') || exist('pwelch', 'builtin')
+    [pxx, f] = pwelch(iq, hamming(nfft), round(nfft/2), nfft, Fs, 'centered');
+else
+    w = 0.54 - 0.46 * cos(2 * pi * (0:nfft-1)' / (nfft - 1));
+    n_seg = floor((N - nfft/2) / (nfft/2));
+    if n_seg < 1
+        nfft = max(64, 2^nextpow2(N));
+        w = 0.54 - 0.46 * cos(2 * pi * (0:nfft-1)' / (nfft - 1));
+        n_seg = 1;
+    end
+    pxx = zeros(nfft, 1);
+    for seg = 1:max(1, n_seg)
+        idx_start = (seg - 1) * round(nfft/2) + 1;
+        if idx_start + nfft - 1 > N, break; end
+        x_w = iq(idx_start:idx_start + nfft - 1) .* w;
+        X = fftshift(fft(x_w, nfft));
+        pxx = pxx + abs(X).^2 / (Fs * sum(w.^2));
+    end
+    pxx = pxx / max(1, seg);
+    f = (-nfft/2:nfft/2-1)' * (Fs / nfft);
+end
+plot(f / 1e6, 10 * log10(max(pxx, 1e-12)), 'Color', [0.47, 0.67, 0.19], 'LineWidth', 1.5);
 grid on;
 title('RF Power Spectral Density (PSD)', 'FontSize', 12, 'FontWeight', 'bold');
 xlabel('Frequency Offset (MHz)', 'FontSize', 11);

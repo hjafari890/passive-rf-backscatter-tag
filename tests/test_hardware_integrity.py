@@ -93,17 +93,19 @@ class TestHardwareIntegrity:
     ])
     def test_kicad_cli_load_and_drc(self, board_dir: str, base_name: str, tmp_path) -> None:
         """Verify that KiCad CLI loads each board cleanly without load errors and generates a DRC report."""
+        import shutil
         import subprocess
 
-        kicad_cli = None
-        for p in [
-            r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe",
-            r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe",
-            r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe",
-        ]:
-            if os.path.isfile(p):
-                kicad_cli = p
-                break
+        kicad_cli = shutil.which("kicad-cli")
+        if not kicad_cli:
+            for p in [
+                r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe",
+                r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe",
+                r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe",
+            ]:
+                if os.path.isfile(p):
+                    kicad_cli = p
+                    break
 
         if not kicad_cli:
             pytest.skip("KiCad CLI not installed on host")

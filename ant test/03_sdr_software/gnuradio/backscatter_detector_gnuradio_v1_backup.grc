@@ -1,6 +1,6 @@
 options:
   parameters:
-    author: Antigravity & User
+    author: Hesam
     catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''

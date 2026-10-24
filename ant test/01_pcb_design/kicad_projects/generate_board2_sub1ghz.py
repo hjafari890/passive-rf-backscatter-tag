@@ -10,7 +10,11 @@ READY_DIR = os.path.join(BASE_DIR, "ready_for_milling")
 SUB1_DIR = os.path.join(READY_DIR, "Board2_Sub1GHz_Planar_Tag")
 os.makedirs(SUB1_DIR, exist_ok=True)
 
-KICAD_CLI = r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
+KICAD_CLI = "kicad-cli"
+for p in [r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe"]:
+    if os.path.isfile(p):
+        KICAD_CLI = p
+        break
 
 pcb_in = os.path.join(KICAD_DIR, "backscatter_tag.kicad_pcb")
 pcb_out = os.path.join(KICAD_DIR, "backscatter_tag_sub1ghz.kicad_pcb")

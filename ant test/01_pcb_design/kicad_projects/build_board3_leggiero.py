@@ -11,7 +11,11 @@ READY_DIR = os.path.join(BASE_DIR, "ready_for_milling")
 BOARD3_DIR = os.path.join(READY_DIR, "Board3_2.4GHz_Leggiero_Bowtie_Tag")
 os.makedirs(BOARD3_DIR, exist_ok=True)
 
-KICAD_CLI = r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
+KICAD_CLI = "kicad-cli"
+for p in [r"C:\Program Files\KiCad\10.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\9.0\bin\kicad-cli.exe", r"C:\Program Files\KiCad\8.0\bin\kicad-cli.exe"]:
+    if os.path.isfile(p):
+        KICAD_CLI = p
+        break
 
 PRO_PATH = os.path.join(KICAD_DIR, "backscatter_tag_leggiero.kicad_pro")
 SCH_PATH = os.path.join(KICAD_DIR, "backscatter_tag_leggiero.kicad_sch")
