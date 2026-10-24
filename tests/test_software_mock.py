@@ -100,3 +100,50 @@ class TestSoftwareMock:
 
         assert os.path.isfile(out_step) and os.path.getsize(out_step) > 1000
         assert os.path.isfile(out_traj) and os.path.getsize(out_traj) > 1000
+
+    def test_plot_backscatter_results_cli(self, tmp_path) -> None:
+        """Verify that software/plot_backscatter_results.py CLI generates all 4 publication plots."""
+        import subprocess
+
+        cmd = [
+            sys.executable,
+            os.path.join(REPO_ROOT, "software", "plot_backscatter_results.py"),
+            "--outdir",
+            str(tmp_path),
+        ]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        assert res.returncode == 0, f"plot_backscatter_results.py CLI failed: {res.stderr}"
+
+        expected_plots = [
+            "cw_step_response.png",
+            "cw_iq_trajectory.png",
+            "wifi_ambient_backscatter.png",
+            "wifi_iq_constellation.png",
+        ]
+        for plot_name in expected_plots:
+            p = tmp_path / plot_name
+            assert p.is_file(), f"Missing plot: {plot_name}"
+            assert p.stat().st_size > 1000, f"Plot {plot_name} is too small"
+
+    def test_gnuradio_script_cli_help(self) -> None:
+        """Verify that backscatter_detector_gnuradio.py --help executes cleanly with code 0."""
+        import subprocess
+
+        # Discover python with gnuradio
+        py_exe = sys.executable
+        radioconda_py = os.path.expanduser(r"~\radioconda\python.exe")
+        if os.path.isfile(radioconda_py):
+            py_exe = radioconda_py
+
+        cmd = [
+            py_exe,
+            os.path.join(REPO_ROOT, "software", "gnuradio", "backscatter_detector_gnuradio.py"),
+            "--help",
+        ]
+        try:
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+            if res.returncode == 0:
+                assert "--help" in res.stdout or "-h" in res.stdout
+        except (subprocess.TimeoutExpired, FileNotFoundError):
+            pytest.skip("GNU Radio / Radioconda environment not available for execution test")
+

@@ -55,10 +55,17 @@ def test_docs_markdown_embedded_images_exist() -> None:
 
 
 def test_no_machine_specific_paths_in_docs() -> None:
-    """Verify that no machine-specific absolute paths or private directories leak into documentation."""
-    files_to_check = [README_PATH] + [
-        os.path.join(DOCS_DIR, f) for f in os.listdir(DOCS_DIR) if f.endswith(".md")
-    ]
+    """Verify that no machine-specific absolute paths or private directories leak into any markdown file in the repository."""
+    files_to_check: list[str] = []
+    ignored_dirs = {".git", ".pytest_cache", ".venv", "venv", ".agents"}
+    for root, dirs, files in os.walk(REPO_ROOT):
+        # Skip ignored directory trees
+        dirs[:] = [d for d in dirs if d not in ignored_dirs]
+        for f in files:
+            if f.endswith(".md"):
+                files_to_check.append(os.path.join(root, f))
+
+    assert len(files_to_check) >= 4, f"Found too few markdown files to check: {len(files_to_check)}"
 
     forbidden_patterns = [
         r"[Cc]:\\Users\\hjafa",
@@ -74,6 +81,7 @@ def test_no_machine_specific_paths_in_docs() -> None:
         for pat in forbidden_patterns:
             matches = re.findall(pat, content, re.IGNORECASE)
             assert len(matches) == 0, (
-                f"Machine-specific path leak found in {os.path.basename(fpath)}: "
+                f"Machine-specific path leak found in {os.path.relpath(fpath, REPO_ROOT)}: "
                 f"matched '{pat}' {len(matches)} time(s)"
             )
+

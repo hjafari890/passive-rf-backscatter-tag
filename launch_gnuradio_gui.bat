@@ -17,7 +17,12 @@ if exist "%USERPROFILE%\radioconda" (
     set "RADIOCONDA_DIR=%USERPROFILE%\radioconda"
 ) else if exist "C:\radioconda" (
     set "RADIOCONDA_DIR=C:\radioconda"
+) else if exist "%LOCALAPPDATA%\radioconda" (
+    set "RADIOCONDA_DIR=%LOCALAPPDATA%\radioconda"
+) else if exist "C:\ProgramData\radioconda" (
+    set "RADIOCONDA_DIR=C:\ProgramData\radioconda"
 )
+
 
 if defined RADIOCONDA_DIR (
     set "PATH=%RADIOCONDA_DIR%;%RADIOCONDA_DIR%\Scripts;%RADIOCONDA_DIR%\Library\bin;!PATH!"

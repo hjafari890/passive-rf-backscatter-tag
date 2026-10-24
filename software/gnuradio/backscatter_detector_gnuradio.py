@@ -392,10 +392,27 @@ class backscatter_detector_gnuradio(gr.top_block, Qt.QWidget):
 
 
 def main(top_block_cls=backscatter_detector_gnuradio, options=None):
+    parser = ArgumentParser(
+        description="Coherent Lock-In Dual-Carrier SDR Detection Suite for Passive Backscatter Tags (GNU Radio)"
+    )
+    # Parse CLI flags (handles --help and -h cleanly)
+    parser.parse_args(sys.argv[1:])
 
     qapp = Qt.QApplication(sys.argv)
 
-    tb = top_block_cls()
+    try:
+        tb = top_block_cls()
+    except RuntimeError as exc:
+        print("\n" + "=" * 70, file=sys.stderr)
+        print(" [WARNING] UHD USRP Hardware Initialization Notice:", file=sys.stderr)
+        print(f" {str(exc).strip()}", file=sys.stderr)
+        print("=" * 70, file=sys.stderr)
+        print("\nPossible solutions:", file=sys.stderr)
+        print("  1. Connect an NI USRP-2900 or Ettus B200 transceiver via USB 3.0.", file=sys.stderr)
+        print("  2. Verify UHD drivers with: uhd_find_devices", file=sys.stderr)
+        print("  3. For offline simulation without hardware, launch the Python SDR GUI:", file=sys.stderr)
+        print("     python software/backscatter_gui_app.py --mock\n", file=sys.stderr)
+        return 1
 
     tb.start()
     tb.flowgraph_started.set()
@@ -415,7 +432,8 @@ def main(top_block_cls=backscatter_detector_gnuradio, options=None):
     timer.start(500)
     timer.timeout.connect(lambda: None)
 
-    qapp.exec_()
+    return qapp.exec_()
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main() or 0)
+

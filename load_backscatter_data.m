@@ -16,10 +16,17 @@ candidates = {
 };
 
 snapshots_dir = '';
+mat_files = [];
 for k = 1:length(candidates)
     if exist(candidates{k}, 'dir')
-        snapshots_dir = candidates{k};
-        break;
+        mat_candidates = dir(fullfile(candidates{k}, '*.mat'));
+        if ~isempty(mat_candidates)
+            snapshots_dir = candidates{k};
+            mat_files = mat_candidates;
+            break;
+        elseif isempty(snapshots_dir)
+            snapshots_dir = candidates{k};
+        end
     end
 end
 
@@ -27,7 +34,9 @@ if isempty(snapshots_dir)
     error('Snapshot folder not found. Please click "EXPORT SNAPSHOT" in the Backscatter GUI first.');
 end
 
-mat_files = dir(fullfile(snapshots_dir, '*.mat'));
+if isempty(mat_files)
+    mat_files = dir(fullfile(snapshots_dir, '*.mat'));
+end
 if isempty(mat_files)
     error('No .mat snapshot files found in %s. Please click "EXPORT SNAPSHOT" in the GUI first.', snapshots_dir);
 end
@@ -43,10 +52,30 @@ data = load(target_file);
 iq = data.iq_samples(:);
 Fs = double(data.sample_rate);
 fc = double(data.carrier_freq_hz);
-rx_gain = double(data.rx_gain_db);
-tx_gain = double(data.tx_gain_db);
-carrier_mode = char(data.carrier_mode);
-state_label = char(data.state_label);
+
+if isfield(data, 'rx_gain_db')
+    rx_gain = double(data.rx_gain_db);
+else
+    rx_gain = 30.0;
+end
+
+if isfield(data, 'tx_gain_db')
+    tx_gain = double(data.tx_gain_db);
+else
+    tx_gain = 50.0;
+end
+
+if isfield(data, 'carrier_mode')
+    carrier_mode = char(data.carrier_mode);
+else
+    carrier_mode = 'CW';
+end
+
+if isfield(data, 'state_label')
+    state_label = char(data.state_label);
+else
+    state_label = 'State 1';
+end
 
 N = length(iq);
 t = (0:N-1)' / Fs;
@@ -54,8 +83,14 @@ t = (0:N-1)' / Fs;
 % Instantaneous and moving average power (dBFS)
 inst_power = abs(iq).^2;
 win = max(1, round(Fs * 0.005)); % 5 ms window
-power_ma = movmean(inst_power, win);
+if exist('movmean', 'builtin') || exist('movmean', 'file')
+    power_ma = movmean(inst_power, win);
+else
+    b = ones(win, 1) / win;
+    power_ma = filter(b, 1, inst_power);
+end
 power_dbfs = 10 * log10(max(power_ma, 1e-12));
+
 
 fprintf('\n=== Measurement Summary ===\n');
 fprintf('  Carrier Frequency : %.3f MHz\n', fc / 1e6);
@@ -75,7 +110,12 @@ grid on;
 title(sprintf('Time-Domain Received Power: P_{rx}(t) @ f_c = %.1f MHz (Mode: %s)', fc / 1e6, carrier_mode), 'FontSize', 12, 'FontWeight', 'bold');
 xlabel('Time (ms)', 'FontSize', 11);
 ylabel('Received Power (dBFS)', 'FontSize', 11);
-ylim([min(power_dbfs)-5, max(power_dbfs)+5]);
+p_min = min(power_dbfs);
+p_max = max(power_dbfs);
+if ~isnan(p_min) && ~isnan(p_max) && (p_max > p_min)
+    ylim([p_min - 5, p_max + 5]);
+end
+
 
 % Subplot 2: Complex I/Q Constellation Phase Plane
 subplot(2, 2, 3);

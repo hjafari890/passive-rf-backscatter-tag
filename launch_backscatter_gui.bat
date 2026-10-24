@@ -9,16 +9,30 @@ echo.
 
 cd /d "%~dp0"
 
-:: 1. Discover Python executable (prefer Radioconda if installed, then system python)
+:: 1. Discover Python executable (prefer local venv, Radioconda, then system python / py launcher)
 set "PY_CMD="
-if exist "%USERPROFILE%\radioconda\python.exe" (
+if exist "%~dp0.venv\Scripts\python.exe" (
+    set "PY_CMD=%~dp0.venv\Scripts\python.exe"
+) else if exist "%~dp0venv\Scripts\python.exe" (
+    set "PY_CMD=%~dp0venv\Scripts\python.exe"
+) else if exist "%USERPROFILE%\radioconda\python.exe" (
     set "PY_CMD=%USERPROFILE%\radioconda\python.exe"
+) else if exist "C:\radioconda\python.exe" (
+    set "PY_CMD=C:\radioconda\python.exe"
+) else if exist "%LOCALAPPDATA%\radioconda\python.exe" (
+    set "PY_CMD=%LOCALAPPDATA%\radioconda\python.exe"
 ) else (
     where python >nul 2>nul
     if !ERRORLEVEL! EQU 0 (
         set "PY_CMD=python"
+    ) else (
+        where py >nul 2>nul
+        if !ERRORLEVEL! EQU 0 (
+            set "PY_CMD=py -3"
+        )
     )
 )
+
 
 if not defined PY_CMD (
     echo [ERROR] No Python interpreter found in PATH or %%USERPROFILE%%\radioconda.

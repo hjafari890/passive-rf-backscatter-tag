@@ -259,14 +259,16 @@ class MockMultiUSRP:
         mode: str = "cw",
         switch_time: float = 1.0,
         random_seed: Optional[int] = 42,
+        sample_rate: Optional[float] = None,
     ) -> None:
         self.device_args = device_args
         self.mode = mode.lower()
         self.switch_time = switch_time
         
         # RF Transceiver configuration
-        self.rx_rate: float = 2.0e6
-        self.tx_rate: float = 2.0e6
+        rate = float(sample_rate) if sample_rate is not None else 2.0e6
+        self.rx_rate: float = rate
+        self.tx_rate: float = rate
         self.rx_freq: float = 2.44e9 if self.mode == "cw" else 2.437e9
         self.tx_freq: float = 2.44e9
         self.rx_gain: float = 30.0
@@ -274,6 +276,7 @@ class MockMultiUSRP:
         self.rx_antenna: str = "RX2"
         self.tx_antenna: str = "TX/RX"
         self.rx_agc: bool = False
+
         
         # Internal PRNG for reproducible and authentic noise generation
         self.rng = np.random.default_rng(random_seed)

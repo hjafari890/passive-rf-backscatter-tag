@@ -473,3 +473,80 @@ def plot_wifi_iq_constellation(
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
     plt.savefig(output_path, dpi=300, facecolor=fig.get_facecolor(), bbox_inches="tight")
     plt.close(fig)
+
+
+def main() -> int:
+    """CLI entry point for generating publication-quality backscatter validation plots."""
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(
+        description="Generate 300-DPI publication figures from backscatter SDR captures or synthetic mock data."
+    )
+    parser.add_argument(
+        "--input", "-i",
+        type=str,
+        default=None,
+        help="Path to .mat snapshot file exported by SDR GUI (optional).",
+    )
+    parser.add_argument(
+        "--outdir", "-o",
+        type=str,
+        default=None,
+        help="Directory to save generated figures (default: software/output).",
+    )
+    args = parser.parse_args()
+
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    out_dir = args.outdir or os.path.join(repo_root, "software", "output")
+    os.makedirs(out_dir, exist_ok=True)
+
+    sample_rate = 2e6
+    samples_cw = None
+    samples_wifi = None
+
+    if args.input and os.path.isfile(args.input):
+        print(f"Loading snapshot from: {args.input}")
+        import scipy.io
+        mat_data = scipy.io.loadmat(args.input)
+        if "iq_samples" in mat_data:
+            samples_cw = mat_data["iq_samples"].flatten()
+        if "sample_rate" in mat_data:
+            sample_rate = float(mat_data["sample_rate"].flatten()[0])
+
+    if samples_cw is None:
+        print("Using physics-grounded MockMultiUSRP to generate high-fidelity synthetic captures...")
+        try:
+            from mock_usrp import MockMultiUSRP
+        except ImportError:
+            from software.mock_usrp import MockMultiUSRP
+
+        mock_cw = MockMultiUSRP(sample_rate=sample_rate, mode="cw")
+        samples_cw = mock_cw.generate_samples(start_idx=0, count=100000)
+
+        mock_wifi = MockMultiUSRP(sample_rate=sample_rate, mode="wifi")
+        samples_wifi = mock_wifi.generate_samples(start_idx=0, count=100000)
+
+    cw_step_path = os.path.join(out_dir, "cw_step_response.png")
+    cw_traj_path = os.path.join(out_dir, "cw_iq_trajectory.png")
+    print(f"Generating CW Step Response: {cw_step_path}")
+    plot_cw_step_response(samples_cw, sample_rate=sample_rate, output_path=cw_step_path)
+    print(f"Generating CW IQ Trajectory: {cw_traj_path}")
+    plot_cw_iq_trajectory(samples_cw, sample_rate=sample_rate, output_path=cw_traj_path)
+
+    if samples_wifi is not None:
+        wifi_env_path = os.path.join(out_dir, "wifi_ambient_backscatter.png")
+        wifi_const_path = os.path.join(out_dir, "wifi_iq_constellation.png")
+        print(f"Generating Wi-Fi Ambient Envelope: {wifi_env_path}")
+        plot_wifi_ambient_backscatter(samples_wifi, sample_rate=sample_rate, output_path=wifi_env_path)
+        print(f"Generating Wi-Fi Constellation Comparison: {wifi_const_path}")
+        plot_wifi_iq_constellation(samples_wifi, sample_rate=sample_rate, output_path=wifi_const_path)
+
+    print("\nAll publication figures generated successfully in:", out_dir)
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
+

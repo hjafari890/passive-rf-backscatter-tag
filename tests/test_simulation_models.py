@@ -104,3 +104,23 @@ class TestSimulationModels:
             out_file = tmp_path / fname
             assert out_file.is_file(), f"Expected simulation output missing: {fname}"
             assert out_file.stat().st_size > 0, f"Simulation output file is empty: {fname}"
+
+    def test_feedline_impedance_solver(self) -> None:
+        """Verify CPWG, unbacked CPW, and microstrip feedline calculations."""
+        from simulation.calc_feedline_impedance import cpwg_calc, unbacked_cpw_calc, microstrip_calc
+
+        w = 1.85e-3
+        g = 0.575e-3
+        h = 1.6e-3
+        eps_r = 4.4
+
+        z0_cpwg, eps_eff_cpwg = cpwg_calc(w, g, h=h, eps_r=eps_r)
+        assert 45.0 <= z0_cpwg <= 55.0, f"CPWG Z0 out of design target: {z0_cpwg:.2f} Ohms"
+        assert 1.0 < eps_eff_cpwg < eps_r, f"Invalid effective dielectric constant: {eps_eff_cpwg}"
+
+        z0_cpw, eps_eff_cpw = unbacked_cpw_calc(w, g, h=h, eps_r=eps_r)
+        assert z0_cpw > z0_cpwg, "Unbacked CPW should have higher impedance than backed CPWG"
+
+        z0_ms, eps_eff_ms = microstrip_calc(w, h=h, eps_r=eps_r)
+        assert 50.0 <= z0_ms <= 80.0, f"Microstrip Z0 unexpected: {z0_ms:.2f} Ohms"
+

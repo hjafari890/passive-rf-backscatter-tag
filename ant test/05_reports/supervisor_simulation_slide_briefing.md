@@ -32,11 +32,11 @@
 ```
 
 #### Image Links for Slide:
-* **Figure A (S11 Comparison):** [s11_comparison.png](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/05_reports/figures/s11_comparison.png)  
+* **Figure A (S11 Comparison):** [s11_comparison.png](05_reports/figures/s11_comparison.png)  
   *Shows that Board 1 ($2.44\,\text{GHz}$) and Board 3 ($2.437\,\text{GHz}$) have deep resonance dips ($S_{11} < -20\,\text{dB}$), confirming minimal energy reflection when matched.*
-* **Figure B (Smith Chart Reflection):** [smith_chart_states.png](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/05_reports/figures/smith_chart_states.png)  
+* **Figure B (Smith Chart Reflection):** [smith_chart_states.png](05_reports/figures/smith_chart_states.png)  
   *Shows that the $50\,\Omega$ load lands at the center $(0, 0)$ with $\Gamma = 0$, while the Short lands at the left edge $(-1, 0)$ with $\Gamma = -1$ ($180^\circ$ phase shift).*
-* **Figure C (Power Step Jump):** [cw_step_response.png](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/05_reports/figures/cw_step_response.png)  
+* **Figure C (Power Step Jump):** [cw_step_response.png](05_reports/figures/cw_step_response.png)  
   *Demonstrates that moving the jumper creates an immediate $+3.5\text{ to }+5.2\,\text{dB}$ step jump in backscattered power.*
 
 ---

@@ -2,8 +2,8 @@
 ## Passive RF Backscatter Tag System — SDR Acquisition & Detection Software
 
 **Target Audience:** New Agent / Engineering Team Member / Supervisor  
-**Workspace Root:** `c:\Users\hjafa\OneDrive\Desktop\back scattering`  
-**Consolidated Engineering Directory:** `c:\Users\hjafa\OneDrive\Desktop\back scattering\ant test`  
+**Workspace Root:** `.`  
+**Consolidated Engineering Directory:** `.`  
 **System Date:** October 2026  
 
 ---
@@ -15,11 +15,11 @@ The physical hardware and antenna engineering milestones are **100% complete**:
   1. **Board 1 (2.44 GHz ISM IFA):** Based on TI SWRA117D, adapted for zero-via single-sided CNC milling on 1.6 mm FR-4. Feedline is a 50 $\Omega$ Grounded Coplanar Waveguide (CPWG, $W=1.85\,\text{mm}, G=0.50\,\text{mm}$).
   2. **Board 2 (868/915 MHz Sub-1GHz Planar Meander):** Single-sided $L_{\text{eff}} = 73.5\,\text{mm}$ meander line replacing the legacy 19-via helical benchmark.
   3. **Board 3 (2.44 GHz Leggiero Bowtie Aperture):** Replicated and reverse-engineered from the published Leggiero paper and Altium design ($R=10.16\,\text{mm}, 80^\circ$ sector, $36 \times 15.5\,\text{mm}$ ground cavity, unified top ground counterpoise loop, 0 vias).
-  - All CAM packages (1:1 isolation DXF, RS-274X Gerbers, Excellon drills) reside in [`ant test/01_pcb_design/ready_for_milling/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/ant%20test/01_pcb_design/ready_for_milling/).
+  - All CAM packages (1:1 isolation DXF, RS-274X Gerbers, Excellon drills) reside in [`ant test/01_pcb_design/ready_for_milling/`](01_pcb_design/ready_for_milling/).
   - Each board features dual pads: an 0805 footprint for a $50\,\Omega$ termination resistor and parallel pin header pads for a shorting jumper (0 $\Omega$ state).
 - **Physical Test Bench Hardware:**
   - **SDR:** National Instruments NI USRP-2900 (Ettus B200 clone, USB 3.0, Serial: `30BF6B0`). Verified streaming at $\sim 2.0\,\text{MS/s}$.
-  - **Host Environment:** Windows 10/11, Python environment via Radioconda (`C:\Users\hjafa\radioconda\python.exe`, includes UHD 4.8.0), and **MATLAB R2025a** (`C:\Program Files\MATLAB\R2025a\bin\matlab.exe`).
+  - **Host Environment:** Windows 10/11, Python environment via Radioconda (`%USERPROFILE%\radioconda\python.exe`, includes UHD 4.8.0), and **MATLAB R2025a** (`C:\Program Files\MATLAB\R2025a\bin\matlab.exe`).
 
 ---
 
@@ -90,7 +90,7 @@ Where:
 ## 5. Directory Map of Current Clean Files
 
 ```text
-c:\Users\hjafa\OneDrive\Desktop\back scattering\ant test\
+.\
 ├── 01_pcb_design/
 │   ├── ready_for_milling/
 │   │   ├── Board1_2.4GHz_IFA_Tag/            # Milling DXF, Gerbers, NC drill for Board 1
@@ -138,8 +138,8 @@ You are an expert RF and Software-Defined Radio (SDR) engineer assisting with a 
 
 2. **Test Equipment & Environment:**
    - **SDR:** NI USRP-2900 (Ettus B200 clone, USB 3.0, Serial: 30BF6B0). Verified working with UHD 4.8.0.
-   - **Host Software:** Windows 10/11, Radioconda Python 3.11 (`C:\Users\hjafa\radioconda\python.exe`), and MATLAB R2025a (`C:\Program Files\MATLAB\R2025a\bin\matlab.exe`).
-   - **Working Directory:** `c:\Users\hjafa\OneDrive\Desktop\back scattering\ant test`
+   - **Host Software:** Windows 10/11, Radioconda Python 3.11 (`%USERPROFILE%\radioconda\python.exe`), and MATLAB R2025a (`C:\Program Files\MATLAB\R2025a\bin\matlab.exe`).
+   - **Working Directory:** `.`
      - CAM & Milling files: `01_pcb_design/ready_for_milling/`
      - Simulations: `02_simulation/`
      - SDR Code: `03_sdr_software/`
@@ -156,5 +156,5 @@ You are an expert RF and Software-Defined Radio (SDR) engineer assisting with a 
    - **Option B (Pure MATLAB):** Provide a clean MATLAB script/app utilizing MATLAB R2025a to stream USRP-2900 samples, perform step detection when the jumper is toggled, and plot publication figures.
    - **Option C (Simple Headless Python CLI Streamer):** A lightweight Python streaming script that streams USRP samples, prints state transitions to console in real time, and auto-saves `.mat` captures for MATLAB.
 
-Please review the existing workspace in `c:\Users\hjafa\OneDrive\Desktop\back scattering\ant test` and recommend the cleanest, most immediate way to get live backscatter measurements on my hardware today.
+Please review the existing workspace in `.` and recommend the cleanest, most immediate way to get live backscatter measurements on my hardware today.
 ```

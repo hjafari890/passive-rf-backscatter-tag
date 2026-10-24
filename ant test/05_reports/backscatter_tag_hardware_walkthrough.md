@@ -11,7 +11,7 @@ This design package delivers the complete hardware deliverables for the **Stage 
 ## 1. Physical Board Renders
 
 ### Board 1: 2.4 GHz Wi-Fi Antenna Tag
-![Board 1 Render](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/pcb_render.png)
+![Board 1 Render](figures/pcb_render.png)
 
 * **Dimensions:** $44.0\,\text{mm} \times 26.5\,\text{mm}$
 * **Antenna:** TI SWRA117D Inverted-F Antenna (IFA)
@@ -19,7 +19,7 @@ This design package delivers the complete hardware deliverables for the **Stage 
 * **Feedline:** $50\,\Omega$ Coplanar Waveguide with Ground (CPWG), width $1.85\,\text{mm}$, ground gap $0.50\,\text{mm}$
 
 ### Board 2: Sub-1GHz CW Tone Tag
-![Board 2 Render](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/pcb_render_sub1ghz.png)
+![Board 2 Render](figures/pcb_render_sub1ghz.png)
 
 * **Dimensions:** $65.0\,\text{mm} \times 32.0\,\text{mm}$
 * **Antenna:** TI SWRA416 Meandered Dipole
@@ -72,13 +72,13 @@ Both boards share an identical feed termination network consisting of:
 ## 3. Electromagnetic Simulation Results
 
 ````carousel
-![S11 Resonance Comparison](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/s11_comparison.png)
+![S11 Resonance Comparison](figures/s11_comparison.png)
 <!-- slide -->
-![Smith Chart Reflection States](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/smith_chart_states.png)
+![Smith Chart Reflection States](figures/smith_chart_states.png)
 <!-- slide -->
-![Differential Radar Cross Section](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/differential_rcs.png)
+![Differential Radar Cross Section](figures/differential_rcs.png)
 <!-- slide -->
-![Impedance Curves](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/impedance_curves.png)
+![Impedance Curves](figures/impedance_curves.png)
 ````
 
 * **$S_{11}$ Return Loss:** Both antennas achieve $S_{11} \le -15\,\text{dB}$ at their respective design frequencies ($2.44\,\text{GHz}$ and $868/915\,\text{MHz}$).
@@ -96,10 +96,10 @@ All files are located in the project directory:
 
 | Deliverable | Board 1 (2.4 GHz Wi-Fi) | Board 2 (Sub-1GHz CW Tone) |
 | :--- | :--- | :--- |
-| **KiCad Project** | [`backscatter_tag.kicad_pro`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/backscatter_tag.kicad_pro) | [`backscatter_tag_sub1ghz.kicad_pro`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/backscatter_tag_sub1ghz.kicad_pro) |
-| **KiCad Layout** | [`backscatter_tag.kicad_pcb`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/backscatter_tag.kicad_pcb) | [`backscatter_tag_sub1ghz.kicad_pcb`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/backscatter_tag_sub1ghz.kicad_pcb) |
-| **RS-274X Gerbers** | [`kicad_pcb/gerbers/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/gerbers) | [`kicad_pcb/gerbers_sub1ghz/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/gerbers_sub1ghz) |
-| **1:1 DXF Routing** | [`kicad_pcb/dxf/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/dxf) | [`kicad_pcb/dxf_sub1ghz/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/kicad_pcb/dxf_sub1ghz) |
+| **KiCad Project** | [`backscatter_tag.kicad_pro`](../../kicad_pcb/backscatter_tag.kicad_pro) | [`backscatter_tag_sub1ghz.kicad_pro`](../../kicad_pcb/backscatter_tag_sub1ghz.kicad_pro) |
+| **KiCad Layout** | [`backscatter_tag.kicad_pcb`](../../kicad_pcb/backscatter_tag.kicad_pcb) | [`backscatter_tag_sub1ghz.kicad_pcb`](../../kicad_pcb/backscatter_tag_sub1ghz.kicad_pcb) |
+| **RS-274X Gerbers** | [`kicad_pcb/gerbers/`](../../kicad_pcb/gerbers) | [`kicad_pcb/gerbers_sub1ghz/`](../../kicad_pcb/gerbers_sub1ghz) |
+| **1:1 DXF Routing** | [`kicad_pcb/dxf/`](../../kicad_pcb/dxf) | [`kicad_pcb/dxf_sub1ghz/`](../../kicad_pcb/dxf_sub1ghz) |
 | **DRC Clearance** | $\ge 0.50\,\text{mm}$ (0 errors, 0 warnings) | $\ge 0.50\,\text{mm}$ (0 errors, 0 warnings) |
 
 ### Recommended Milling Machine Settings (FlatCAM / CopperCAM):
@@ -113,19 +113,19 @@ All files are located in the project directory:
 
 ## 5. SDR Validation Scripts (Ready for Later Stage)
 
-Although we are focusing on physical PCB fabrication first, the Python SDR validation pipeline has already been pre-built in [`sdr_pipeline/`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/sdr_pipeline):
+Although we are focusing on physical PCB fabrication first, the Python SDR validation pipeline has already been pre-built in [`sdr_pipeline/`](../../sdr_pipeline):
 
 ````carousel
-![CW Step Response](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/cw_step_response.png)
+![CW Step Response](figures/cw_step_response.png)
 <!-- slide -->
-![CW IQ Trajectory](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/cw_iq_trajectory.png)
+![CW IQ Trajectory](figures/cw_iq_trajectory.png)
 <!-- slide -->
-![Wi-Fi Ambient Backscatter](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/wifi_ambient_backscatter.png)
+![Wi-Fi Ambient Backscatter](figures/wifi_ambient_backscatter.png)
 <!-- slide -->
-![Wi-Fi IQ Constellation](/C:/Users/hjafa/.gemini/antigravity/brain/a73d0ac6-531c-4032-b3c2-405e590cd8bf/wifi_iq_constellation.png)
+![Wi-Fi IQ Constellation](figures/wifi_iq_constellation.png)
 ````
 
-* **[`usrp_backscatter.py`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/sdr_pipeline/usrp_backscatter.py):** Connects to the NI USRP-2900 over UHD in bistatic mode (TX on `TX/RX`, RX on `RX2`).
-* **[`mock_usrp.py`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/sdr_pipeline/mock_usrp.py):** Synthetic testbench allowing you to simulate and plot IQ data without connecting hardware.
-* **[`plot_backscatter_results.py`](file:///c:/Users/hjafa/OneDrive/Desktop/back%20scattering/sdr_pipeline/plot_backscatter_results.py):** Automatically generates publication-quality step-response and constellation plots comparing the $50\,\Omega$, Open, and Short jumper positions.
+* **[`usrp_backscatter.py`](../../sdr_pipeline/usrp_backscatter.py):** Connects to the NI USRP-2900 over UHD in bistatic mode (TX on `TX/RX`, RX on `RX2`).
+* **[`mock_usrp.py`](../../sdr_pipeline/mock_usrp.py):** Synthetic testbench allowing you to simulate and plot IQ data without connecting hardware.
+* **[`plot_backscatter_results.py`](../../sdr_pipeline/plot_backscatter_results.py):** Automatically generates publication-quality step-response and constellation plots comparing the $50\,\Omega$, Open, and Short jumper positions.
 
