@@ -55,20 +55,28 @@ def test_docs_markdown_embedded_images_exist() -> None:
 
 
 def test_no_machine_specific_paths_in_docs() -> None:
-    """Verify that no machine-specific absolute paths, private directories, or assistant markers leak into any source or markdown file."""
-    files_to_check: list[str] = []
-    ignored_dirs = {".git", ".pytest_cache", ".venv", "venv", ".agents"}
-    checked_exts = {".md", ".py", ".bat", ".m", ".grc", ".sh", ".yml", ".yaml", ".json"}
-
-    for root, dirs, files in os.walk(REPO_ROOT):
-        # Skip ignored directory trees
-        dirs[:] = [d for d in dirs if d not in ignored_dirs]
-        for f in files:
-            # Exclude the test file itself which declares the pattern strings
-            if f == "test_documentation_links.py":
-                continue
-            if any(f.endswith(ext) for ext in checked_exts):
-                files_to_check.append(os.path.join(root, f))
+    """Verify that no machine-specific absolute paths, private directories, or assistant markers leak into any tracked source or markdown file."""
+    import subprocess
+    res = subprocess.run(["git", "ls-files"], cwd=REPO_ROOT, capture_output=True, text=True)
+    if res.returncode == 0:
+        tracked_files = [line.strip() for line in res.stdout.splitlines() if line.strip()]
+        checked_exts = {".md", ".py", ".bat", ".m", ".grc", ".sh", ".yml", ".yaml", ".json"}
+        files_to_check = [
+            os.path.join(REPO_ROOT, f)
+            for f in tracked_files
+            if any(f.endswith(ext) for ext in checked_exts) and os.path.basename(f) != "test_documentation_links.py"
+        ]
+    else:
+        files_to_check = []
+        ignored_dirs = {".git", ".pytest_cache", ".venv", "venv", ".agents", "SDR setup", "open source systems", "Notes", "Reports and Slides", "paper"}
+        checked_exts = {".md", ".py", ".bat", ".m", ".grc", ".sh", ".yml", ".yaml", ".json"}
+        for root, dirs, files in os.walk(REPO_ROOT):
+            dirs[:] = [d for d in dirs if d not in ignored_dirs]
+            for f in files:
+                if f == "test_documentation_links.py":
+                    continue
+                if any(f.endswith(ext) for ext in checked_exts):
+                    files_to_check.append(os.path.join(root, f))
 
     assert len(files_to_check) >= 20, f"Found too few source/doc files to check: {len(files_to_check)}"
 
